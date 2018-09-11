@@ -51,5 +51,7 @@
   </form>
   <%}%>
       <a href="./AllEssayServlet" target="_blank">全部文章</a>
+          <button onclick="f()">外部js</button>
+      <script type="text/javascript" src="example2.js"></script>
   </body>
 </html>
