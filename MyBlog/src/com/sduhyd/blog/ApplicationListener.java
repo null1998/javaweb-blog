@@ -1,3 +1,5 @@
+package com.sduhyd.blog;
+
 import com.sduhyd.blog.Utils;
 
 import javax.servlet.ServletContextEvent;

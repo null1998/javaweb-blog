@@ -1,3 +1,5 @@
+package com.sduhyd.blog;
+
 import com.sduhyd.blog.Utils;
 
 import javax.servlet.ServletException;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "UpdateEssayServlet")
+
 public class UpdateEssayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
