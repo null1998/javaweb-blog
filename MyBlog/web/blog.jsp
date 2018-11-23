@@ -65,7 +65,7 @@
         for(var key in formdata) {
             encodedData+= '&' + key + '=' + encodeURIComponent(formdata[key]);
         }
-        xhr.open("POST", "./UpdateEssayServlet", true);
+        
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(encodedData.slice(1));
         xhr.onreadystatechange = function(e){
