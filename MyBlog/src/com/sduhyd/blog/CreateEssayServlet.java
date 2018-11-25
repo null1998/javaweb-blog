@@ -9,10 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Date;
 
 
 public class CreateEssayServlet extends HttpServlet {
+    private Connection conn=null;
+    private Utils utils;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        utils =new Utils();
+        conn=utils.connection();
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         HttpSession session= request.getSession(false);
@@ -20,11 +29,12 @@ public class CreateEssayServlet extends HttpServlet {
         String title = request.getParameter("create_title");
         String article = request.getParameter("create_article");
         Date modify_time=new Date();
-        Utils.createEssay(user_id,title,article,modify_time);
+        utils.createEssay(conn,user_id,title,article,modify_time);
         response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-           doPost(request,response);
+    @Override
+    public void destroy() {
+        super.destroy();
+        utils.releaseConnection(conn);
     }
 }

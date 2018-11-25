@@ -10,17 +10,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 
 public class LoginServlet extends HttpServlet {
+    private Connection conn=null;
+    private Utils utils;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        utils =new Utils();
+        conn=utils.connection();
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             response.setContentType("text/html;charset=utf-8");
             HttpSession session = request.getSession(false);
             String result = "";
             String username=request.getParameter("username");
             String password=request.getParameter("password");
-            User user= Utils.login(username,password);
-
-
+            User user= utils.login(conn,username,password);
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             if(user != null){
                 session.setAttribute("current-user", username);
@@ -31,8 +38,9 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("登录失败！");
             }
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            doPost(request,response);
+    @Override
+    public void destroy() {
+        super.destroy();
+        utils.releaseConnection(conn);
     }
 }

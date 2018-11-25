@@ -9,46 +9,49 @@ import java.util.Date;
 
 public class Utils {
         volatile  static int essay_count;
-        public static Connection conn=null;
-        public static Connection connection() {
+
+        public  Connection connection() {
         String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://47.94.221.23:3306/MYBLOG?useUnicode=true&characterEncoding=utf-8&useSSL=false";
-        String user = "root";
+        String url = "jdbc:mysql://localhost:3306/DB_BLOG?useUnicode=true&characterEncoding=utf-8&useSSL=false";
+        String user = "test";
         String password = "12345";
+        Connection conn=null;
         try {
             Class.forName(driver); //classLoader,加载对应驱动
+            System.out.println("Connecting to database...");
             conn = (Connection) DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+          System.out.println("Connect success!");
         return conn;
         }
-    public static void releaseConnection(){
+    public  void releaseConnection(Connection conn){
         try {
             if(conn != null && !conn.isClosed()) {
                 conn.close();
+                System.out.println("Disconnect success");
             }
             conn = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public static User register(String username,String password){
+    public User register(Connection conn,String username,String password){
         if(conn==null){
-            conn=Utils.connection();
+            conn=connection();
         }
         try {
             //检查注册用户名与昵称是否重复
-            String sqlfind = "select username from user where username = ?";
-            PreparedStatement statement = conn.prepareStatement(sqlfind);
+            String sql_check = "select username from BLOG_TB_USER where username = ?";
+            PreparedStatement statement = conn.prepareStatement(sql_check);
             statement.setString(1, username);
-
             ResultSet rs = statement.executeQuery();
             if(rs.getFetchSize() == 0) {
                 //提交注册信息
-                String sql ="insert into user(username,password)values(?,?)";
+                String sql ="insert into BLOG_TB_USER(username,password)values(?,?)";
                 PreparedStatement preparedstatement= conn.prepareStatement(sql);
                 preparedstatement.setString(1,username);
                 preparedstatement.setString(2,password);
@@ -57,6 +60,7 @@ public class Utils {
                 }finally{
                     preparedstatement.close();
                 }
+                //注册成功后封装为User类返回
                 ResultSet rs1= statement.executeQuery();
                 try {
                     if(rs1.first()) {
@@ -81,12 +85,12 @@ public class Utils {
         return null;
     }
 
-    public static User login(String username,String password) {
+    public User login(Connection conn,String username,String password) {
         if(conn==null){
-            conn=Utils.connection();
+            conn=connection();
         }
         try {
-            String sql = "select * from user where username = ?";
+            String sql = "select * from BLOG_TB_USER where username = ?";
             if(conn==null)
                 System.out.println("error");
             PreparedStatement statement= conn.prepareStatement(sql);
@@ -111,9 +115,9 @@ public class Utils {
         return null;
     }
 
-    public static Essay createEssay(Integer user_id, String title, String article, Date modify_time){
+    public Essay createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time){
             if(conn==null){
-                connection();
+                conn=connection();
             }
         java.sql.Date sql_date = new java.sql.Date(modify_time.getTime());
             Essay essay = new Essay();
@@ -135,9 +139,9 @@ public class Utils {
 
             return essay;
     }
-    public static Essay[] showEssay(Integer user_id){
+    public  Essay[] showEssay(Connection conn,Integer user_id){
         if(conn==null){
-            connection();
+            conn=connection();
         }
         try{
             String selectCountSql = "select count(*) from essay where user_id=?";
@@ -181,9 +185,9 @@ public class Utils {
         }
         return new Essay[0];
     }
-    public static void  updateEssay(String id,String title,String content){
+    public void  updateEssay(Connection conn,String id,String title,String content){
             if(conn==null){
-                connection();
+                conn=connection();
             }
             try{
                 String sql_update="update essay set title=?,article=? where id=?";
@@ -200,9 +204,9 @@ public class Utils {
             }
 
     }
-    public static ArrayList<Essay> allEssay(){
+    public ArrayList<Essay> allEssay(Connection conn){
             if(conn==null){
-                connection();
+                conn=connection();
             }
             ArrayList<Essay> arrayList = new ArrayList<>();
             try{

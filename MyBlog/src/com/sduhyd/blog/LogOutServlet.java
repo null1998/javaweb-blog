@@ -7,16 +7,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 
 
 public class LogOutServlet extends HttpServlet {
+    private Connection conn=null;
+    private Utils utils;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        utils =new Utils();
+        conn=utils.connection();
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.invalidate();
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-          doPost(request,response);
+    @Override
+    public void destroy() {
+        super.destroy();
+        utils.releaseConnection(conn);
     }
 }
