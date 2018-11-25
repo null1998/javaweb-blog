@@ -1,3 +1,3 @@
 function f() {
-    alert("<\/script>外部js");
+    alert("<\/script>这是一个外部js");
 }

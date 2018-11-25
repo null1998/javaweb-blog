@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class AllEssayServlet extends HttpServlet {
     private Connection conn=null;
-    private Utils utils;
+    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -25,6 +25,8 @@ public class AllEssayServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
         ArrayList<Essay> arrayList = new ArrayList<>();
         arrayList= utils.allEssay(conn);
         ServletContext context = request.getServletContext();

@@ -12,7 +12,7 @@ import java.sql.Connection;
 
 public class LogOutServlet extends HttpServlet {
     private Connection conn=null;
-    private Utils utils;
+    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();

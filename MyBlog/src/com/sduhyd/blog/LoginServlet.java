@@ -14,7 +14,7 @@ import java.sql.Connection;
 
 public class LoginServlet extends HttpServlet {
     private Connection conn=null;
-    private Utils utils;
+    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -22,9 +22,9 @@ public class LoginServlet extends HttpServlet {
         conn=utils.connection();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            request.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=utf-8");
             HttpSession session = request.getSession(false);
-            String result = "";
             String username=request.getParameter("username");
             String password=request.getParameter("password");
             User user= utils.login(conn,username,password);
@@ -32,8 +32,7 @@ public class LoginServlet extends HttpServlet {
             if(user != null){
                 session.setAttribute("current-user", username);
                 session.setAttribute("current-user_id",user.getId());
-                result="login";
-                System.out.println(user.getUsername()+" "+result);
+                System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
             }else {
                 System.out.println("登录失败！");
             }

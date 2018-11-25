@@ -16,7 +16,7 @@ import java.sql.Connection;
 
 public class ShowEssayServlet extends HttpServlet {
     private Connection conn=null;
-    private Utils utils;
+    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -24,6 +24,8 @@ public class ShowEssayServlet extends HttpServlet {
         conn=utils.connection();
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
         HttpSession session = request.getSession(false);
         //session.setAttribute("isShow",1);
         Essay[] essays=utils.showEssay(conn,(Integer) session.getAttribute("current-user_id"));

@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class CreateEssayServlet extends HttpServlet {
     private Connection conn=null;
-    private Utils utils;
+    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -24,12 +24,14 @@ public class CreateEssayServlet extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
         HttpSession session= request.getSession(false);
         Integer user_id=(Integer) session.getAttribute("current-user_id");
+        String username = (String)session.getAttribute("current-user");
         String title = request.getParameter("create_title");
         String article = request.getParameter("create_article");
         Date modify_time=new Date();
-        utils.createEssay(conn,user_id,title,article,modify_time);
+        utils.createEssay(conn,user_id,title,article,modify_time,username);
         response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
     @Override
