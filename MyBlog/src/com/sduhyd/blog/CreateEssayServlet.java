@@ -14,15 +14,13 @@ import java.util.Date;
 
 
 public class CreateEssayServlet extends HttpServlet {
-    private Connection conn=null;
-    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
-        utils =new Utils();
-        conn=utils.connection();
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         HttpSession session= request.getSession(false);
@@ -31,12 +29,15 @@ public class CreateEssayServlet extends HttpServlet {
         String title = request.getParameter("create_title");
         String article = request.getParameter("create_article");
         Date modify_time=new Date();
-        utils.createEssay(conn,user_id,title,article,modify_time,username);
+        Utils.createEssay((Connection) getServletContext().getAttribute("conn"),user_id,title,article,modify_time,username);
         response.sendRedirect(request.getContextPath()+"/index.jsp");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request,response);
     }
     @Override
     public void destroy() {
         super.destroy();
-        utils.releaseConnection(conn);
     }
 }

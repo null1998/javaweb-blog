@@ -9,39 +9,8 @@ import java.util.Date;
 
 public class Utils {
 
-        public  Connection connection() {
-        String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/DB_BLOG?useUnicode=true&characterEncoding=utf-8&useSSL=false";
-        String user = "test";
-        String password = "12345";
-        Connection conn=null;
-        try {
-            Class.forName(driver); //classLoader,加载对应驱动
-            System.out.println("数据库连接中...");
-            conn = (Connection) DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-          System.out.println("数据库连接成功！");
-        return conn;
-        }
-    public  void releaseConnection(Connection conn){
-        try {
-            if(conn != null && !conn.isClosed()) {
-                conn.close();
-                System.out.println("数据库断开连接成功！");
-            }
-            conn = null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public User register(Connection conn,String username,String password){
-        if(conn==null){
-            conn=connection();
-        }
+
+    public static User register(Connection conn,String username,String password){
         try {
             //检查注册用户名与昵称是否重复
             String sql_check = "select username from BLOG_TB_USER where username = ?";
@@ -85,10 +54,7 @@ public class Utils {
         return null;
     }
 
-    public User login(Connection conn,String username,String password) {
-        if(conn==null){
-            conn=connection();
-        }
+    public static User login(Connection conn,String username,String password) {
         try {
             String sql = "select * from BLOG_TB_USER where username = ?";
             PreparedStatement statement= conn.prepareStatement(sql);
@@ -113,10 +79,8 @@ public class Utils {
         return null;
     }
 
-    public Essay createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time,String username){
-            if(conn==null){
-                conn=connection();
-            }
+    public static Essay createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time,String username){
+
         java.sql.Date sql_date = new java.sql.Date(modify_time.getTime());
             Essay essay = new Essay();
         try{
@@ -140,10 +104,8 @@ public class Utils {
 
             return essay;
     }
-    public  Essay[] showEssay(Connection conn,Integer user_id){
-        if(conn==null){
-            conn=connection();
-        }
+    public static Essay[] showEssay(Connection conn,Integer user_id){
+
         try{
             //统计用户的文章数
             String selectCountSql = "select count(*) from BLOG_TB_ESSAY where user_id=?";
@@ -189,10 +151,8 @@ public class Utils {
         }
         return new Essay[0];
     }
-    public void  updateEssay(Connection conn,String id,String title,String content){
-            if(conn==null){
-                conn=connection();
-            }
+    public static void  updateEssay(Connection conn,String id,String title,String content){
+
             try{
                 String sql_update="update BLOG_TB_ESSAY set title=?,article=? where id=?";
                 PreparedStatement statement = conn.prepareStatement(sql_update);
@@ -209,10 +169,8 @@ public class Utils {
             }
 
     }
-    public ArrayList<Essay> allEssay(Connection conn){
-            if(conn==null){
-                conn=connection();
-            }
+    public static ArrayList<Essay> allEssay(Connection conn){
+
             ArrayList<Essay> arrayList = new ArrayList<>();
             try{
                 String sql_all = "select *from BLOG_TB_ESSAY";
@@ -240,25 +198,7 @@ public class Utils {
             return arrayList;
     }
 
-//    public static String  essaysToJsonArray( Essay[]essays){
-//            String jsonData="";
-//            for(int j=0;j<essays.length;j++){
-//                if(j==0){
-//                    jsonData+="[";
-//                }
-//                jsonData=jsonData+"{"+"\""+"title"+"\""+":"+"\""+essays[j].getTitle()+"\""+","+"\""+"article"+"\""+":"+"\""+essays[j].getArticle()+"\""+","
-//                    +"\""+"creation_time"+"\""+":"+"\""+essays[j].getCreation_time()+"\""+","+"\""+"modify_time"+"\""+":"+"\""+essays[j].getModify_time()+"\""
-//                    +"}";
-//                if(j!=essay_count-1){
-//                    jsonData+=",";
-//                }
-//                if(j==essay_count-1){
-//                    jsonData+="]";
-//                }
-//            }
-//            essay_count=0;
-//            return jsonData;
-//    }
+
 }
 
 

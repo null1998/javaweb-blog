@@ -13,33 +13,35 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 
 public class LoginServlet extends HttpServlet {
-    private Connection conn=null;
-    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
-        utils =new Utils();
-        conn=utils.connection();
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        HttpSession session = request.getSession(false);
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
+        Connection conn=(Connection) getServletContext().getAttribute("conn");
+        User user= Utils.login(conn,username,password);
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        if(user != null){
+            session.setAttribute("current-user", username);
+            session.setAttribute("current-user_id",user.getId());
+            System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
+        }else {
+            System.out.println("登录失败！");
+        }
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            request.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=utf-8");
-            HttpSession session = request.getSession(false);
-            String username=request.getParameter("username");
-            String password=request.getParameter("password");
-            User user= utils.login(conn,username,password);
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-            if(user != null){
-                session.setAttribute("current-user", username);
-                session.setAttribute("current-user_id",user.getId());
-                System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
-            }else {
-                System.out.println("登录失败！");
-            }
+            doGet(request,response);
     }
     @Override
     public void destroy() {
         super.destroy();
-        utils.releaseConnection(conn);
     }
 }

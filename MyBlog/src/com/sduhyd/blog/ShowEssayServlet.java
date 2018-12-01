@@ -15,27 +15,28 @@ import java.sql.Connection;
 
 
 public class ShowEssayServlet extends HttpServlet {
-    private Connection conn=null;
-    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
-        utils =new Utils();
-        conn=utils.connection();
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         HttpSession session = request.getSession(false);
         //session.setAttribute("isShow",1);
-        Essay[] essays=utils.showEssay(conn,(Integer) session.getAttribute("current-user_id"));
+        Essay[] essays=Utils.showEssay((Connection) getServletContext().getAttribute("conn"),(Integer) session.getAttribute("current-user_id"));
         ServletContext context = request.getServletContext();
         context.setAttribute("essays", essays);
         response.sendRedirect(request.getContextPath()+"/blog.jsp");
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request,response);
+    }
+
     @Override
     public void destroy() {
         super.destroy();
-        utils.releaseConnection(conn);
     }
 }

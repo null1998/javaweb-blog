@@ -16,25 +16,26 @@ import java.util.Map;
 
 
 public class UpdateEssayServlet extends HttpServlet {
-    private Connection conn=null;
-    private Utils utils=null;
     @Override
     public void init() throws ServletException {
         super.init();
-        utils =new Utils();
-        conn=utils.connection();
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         String  id=request.getParameter("id");
         String title=request.getParameter("title");
         String content=request.getParameter("content");
-        utils.updateEssay(conn,id,title,content);
+        Utils.updateEssay((Connection) getServletContext().getAttribute("conn"),id,title,content);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request,response);
     }
     @Override
     public void destroy() {
         super.destroy();
-        utils.releaseConnection(conn);
     }
 }

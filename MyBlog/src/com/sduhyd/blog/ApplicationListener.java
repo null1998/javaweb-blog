@@ -1,7 +1,8 @@
 package com.sduhyd.blog;
 
-import com.sduhyd.blog.Utils;
+import com.sduhyd.blog.ConnctionDB;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
@@ -12,15 +13,15 @@ public class ApplicationListener implements ServletContextListener {
     private Utils utils=null;
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//        utils=new Utils();
-//        System.out.println("正在连接数据库.......");
-//        utils.connection();
-//        System.out.println("数据库连接成功！");
+          ServletContext sc=sce.getServletContext();
+          String url=sc.getInitParameter("url-database");
+          Connection conn= new ConnctionDB(url).connection();
+          sc.setAttribute("conn",conn);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
-//        System.out.println("准备关闭数据库连接");
-//        utils.releaseConnection(conn);
-//        System.out.println("数据库连接关闭完成");
+          ServletContext sc=sce.getServletContext();
+          Connection conn=(Connection) sc.getAttribute("conn");
+          new ConnctionDB().releaseConnection(conn);
     }
 }
