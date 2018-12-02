@@ -1,6 +1,10 @@
 package com.sduhyd.blog;
 
-public class User {
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+
+public class User implements HttpSessionBindingListener{
     private Integer id;
     private String username;
     private String password;
@@ -27,6 +31,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @Override
+    public void valueBound(HttpSessionBindingEvent event){
+        HttpSession session=event.getSession();
+        System.out.println(this.getUsername()+"绑定到会话："+session.getId());
+    }
+    public void valueUnbound(HttpSessionBindingEvent event){
+        HttpSession session=event.getSession();
+        System.out.println(this.getUsername()+"解除绑定："+session.getId());
+    }
 
 }

@@ -25,10 +25,11 @@ public class UpdateEssayServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
+        Connection conn=(Connection) getServletContext().getAttribute("conn");
         String  id=request.getParameter("id");
         String title=request.getParameter("title");
         String content=request.getParameter("content");
-        Utils.updateEssay((Connection) getServletContext().getAttribute("conn"),id,title,content);
+        new Utils().updateEssay(conn,id,title,content);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

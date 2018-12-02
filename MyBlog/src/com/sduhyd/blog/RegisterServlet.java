@@ -22,9 +22,10 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
+        Connection conn=(Connection) getServletContext().getAttribute("conn");
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        User user=Utils.register((Connection) getServletContext().getAttribute("conn"),username,password);
+        User user=new Utils().register(conn,username,password);
         response.sendRedirect(request.getContextPath()+"/index.jsp");
         if(user != null) {
             System.out.println("用户 "+user.getUsername()+" 注册成功！");

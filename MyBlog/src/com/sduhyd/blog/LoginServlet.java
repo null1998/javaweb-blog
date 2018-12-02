@@ -4,10 +4,7 @@ import com.sduhyd.blog.User;
 import com.sduhyd.blog.Utils;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -22,19 +19,24 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        HttpSession session = request.getSession(false);
+
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         Connection conn=(Connection) getServletContext().getAttribute("conn");
-        User user= Utils.login(conn,username,password);
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        User user=new Utils().login(conn,username,password);
+        Cookie cookie=new Cookie("username",username);
+        cookie.setMaxAge(60*60*24);
         if(user != null){
-            session.setAttribute("current-user", username);
-            session.setAttribute("current-user_id",user.getId());
+            response.addCookie(cookie);
+            synchronized (request.getSession(false)){
+                HttpSession session = request.getSession(false);
+                session.setAttribute("current_user", user);
+            }
             System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
         }else {
             System.out.println("登录失败！");
         }
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

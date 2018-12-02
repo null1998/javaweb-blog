@@ -20,17 +20,15 @@ public class AllEssayServlet extends HttpServlet {
         super.init();
 
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        ArrayList<Essay> arrayList = new ArrayList<>();
-        arrayList= Utils.allEssay((Connection) getServletContext().getAttribute("conn"));
-        ServletContext context = request.getServletContext();
+        ServletContext  context = request.getServletContext();
+        Connection conn=(Connection) context.getAttribute("conn");
+        ArrayList<Essay> arrayList = new Utils().allEssay(conn);
         context.setAttribute("allEssay",arrayList);
         response.sendRedirect(request.getContextPath()+"/allblog.jsp");
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);

@@ -22,9 +22,14 @@ public class ShowEssayServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        HttpSession session = request.getSession(false);
-        //session.setAttribute("isShow",1);
-        Essay[] essays=Utils.showEssay((Connection) getServletContext().getAttribute("conn"),(Integer) session.getAttribute("current-user_id"));
+        User current_user=null;
+        synchronized (request.getSession(false)){
+            HttpSession session = request.getSession(false);
+            current_user=(User)session.getAttribute("current_user");
+        }
+        Connection conn=(Connection) getServletContext().getAttribute("conn");
+        Integer current_user_id=current_user.getId();
+        Essay[] essays=new Utils().showEssay(conn,current_user_id);
         ServletContext context = request.getServletContext();
         context.setAttribute("essays", essays);
         response.sendRedirect(request.getContextPath()+"/blog.jsp");

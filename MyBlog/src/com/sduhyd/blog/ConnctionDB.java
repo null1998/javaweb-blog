@@ -1,20 +1,16 @@
 package com.sduhyd.blog;
 
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnctionDB {
-    private String url=null;
-    public ConnctionDB(){
 
-    }
-    public ConnctionDB(String url){
-        this.url=url;
-    }
-    public Connection connection(){
+    public Connection connection(String url_database){
         String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://"+this.url+"?useUnicode=true&characterEncoding=utf-8&useSSL=false";
+        String url = "jdbc:mysql://"+url_database+"?useUnicode=true&characterEncoding=utf-8&useSSL=false";
         String user = "test";
         String password = "12345";
         Connection conn=null;

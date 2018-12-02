@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Utils {
-
-
-    public static User register(Connection conn,String username,String password){
+    public  User register(Connection conn,String username,String password){
         try {
             //检查注册用户名与昵称是否重复
             String sql_check = "select username from BLOG_TB_USER where username = ?";
@@ -54,7 +52,7 @@ public class Utils {
         return null;
     }
 
-    public static User login(Connection conn,String username,String password) {
+    public  User login(Connection conn,String username,String password) {
         try {
             String sql = "select * from BLOG_TB_USER where username = ?";
             PreparedStatement statement= conn.prepareStatement(sql);
@@ -79,7 +77,7 @@ public class Utils {
         return null;
     }
 
-    public static Essay createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time,String username){
+    public  Essay createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time,String username){
 
         java.sql.Date sql_date = new java.sql.Date(modify_time.getTime());
             Essay essay = new Essay();
@@ -104,7 +102,7 @@ public class Utils {
 
             return essay;
     }
-    public static Essay[] showEssay(Connection conn,Integer user_id){
+    public  Essay[] showEssay(Connection conn,Integer user_id){
 
         try{
             //统计用户的文章数
@@ -151,7 +149,7 @@ public class Utils {
         }
         return new Essay[0];
     }
-    public static void  updateEssay(Connection conn,String id,String title,String content){
+    public void  updateEssay(Connection conn,String id,String title,String content){
 
             try{
                 String sql_update="update BLOG_TB_ESSAY set title=?,article=? where id=?";
@@ -169,7 +167,7 @@ public class Utils {
             }
 
     }
-    public static ArrayList<Essay> allEssay(Connection conn){
+    public ArrayList<Essay> allEssay(Connection conn){
 
             ArrayList<Essay> arrayList = new ArrayList<>();
             try{

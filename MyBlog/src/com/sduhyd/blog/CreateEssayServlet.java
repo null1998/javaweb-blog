@@ -23,13 +23,18 @@ public class CreateEssayServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        HttpSession session= request.getSession(false);
-        Integer user_id=(Integer) session.getAttribute("current-user_id");
-        String username = (String)session.getAttribute("current-user");
+        User current_user=null;
+        synchronized (request.getSession(false)){
+            HttpSession session=request.getSession(false);;
+            current_user=(User)session.getAttribute("current_user");
+        }
+        Connection conn=(Connection) getServletContext().getAttribute("conn");
+        Integer user_id=current_user.getId();
+        String username = current_user.getUsername();
         String title = request.getParameter("create_title");
         String article = request.getParameter("create_article");
         Date modify_time=new Date();
-        Utils.createEssay((Connection) getServletContext().getAttribute("conn"),user_id,title,article,modify_time,username);
+        new Utils().createEssay(conn,user_id,title,article,modify_time,username);
         response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
 
