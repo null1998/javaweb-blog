@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title><%=session.getAttribute("current-user")%>的文章列表</title>
+    <title><%=((User)session.getAttribute("current_user")).getUsername()%>的文章列表</title>
 </head>
 <body>
 <%

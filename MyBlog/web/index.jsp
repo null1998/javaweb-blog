@@ -1,4 +1,5 @@
 <%@ page import="com.sduhyd.blog.Utils" %>
+<%@ page import="com.sduhyd.blog.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: test
@@ -17,11 +18,23 @@
   <header>
       <h1>当前登录用户为：</h1>
       <%
-      String username = (String)session.getAttribute("current-user");
-      if(username == null) {
+        Cookie[]cookies=request.getCookies();
+        for(int i=0;i<cookies.length;i++){
+            Cookie cookie=cookies[i];
+            if(cookie.getName().equals("username")){
+                String username=cookie.getValue();
+                out.println("欢迎回来!"+"["+username+"]"+"<br/>");
+                break;
+            }
+        }
+
+      %>
+      <%
+      User current_user = (User)session.getAttribute("current_user");
+      if(current_user == null) {
           out.print("<<没有登录>>");
       } else {
-          out.print("用户"+"["+username+"]");
+          out.print("用户"+"["+current_user.getUsername()+"]");
       }
       %>
   </header>
@@ -41,7 +54,7 @@
     密码:<input type="password" name="password" id="password1"> <br/>
    <input type="submit" id="register" value="注册"><br/>
   </form>
-  <%if(username!=null){%>
+  <%if(current_user!=null){%>
   <a href="ShowEssayServlet" target="_blank">显示我的文章列表</a>
   <fieldset>
       <legend>Personal information:</legend>

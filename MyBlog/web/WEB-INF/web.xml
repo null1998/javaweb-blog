@@ -10,6 +10,12 @@
     <listener>
         <listener-class>com.sduhyd.blog.ApplicationListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.sduhyd.blog.SessionListener</listener-class>
+    </listener>
+    <session-config>
+        <session-timeout>15</session-timeout>
+    </session-config>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.LoginServlet</servlet-class>
