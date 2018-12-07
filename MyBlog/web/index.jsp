@@ -14,17 +14,38 @@
     <title>博客主页</title>
       <script type="text/javascript">
           window.onload=function (ev) {
-              document.getElementById("login").onclick=checkInput;
+              document.getElementById("username1").onblur=function (ev1){validDataLength(3,15,rigisterForm["username"],username1_help);}
+              document.getElementById("password1").onblur=function (ev1) { validDataLength(3,15,rigisterForm["password"],password1_help); }
+              document.getElementById("register").onclick=function(evl){return checkInput();};
+
           }
-          var checkInput=function () {
-              if(document.getElementById("username").value==""){
-                  alert("账号不能为空");
-              }else if(document.getElementById("password").value==""){
-                  alert("密码不能为空");
+          function validDataLength(min,max,inputFiled,helpText){
+              if(inputFiled.value.length==0){
+                  if(helpText!=null){
+                      helpText.innerHTML="请输入数据";
+                      return false;
+                  }
+              }else if(inputFiled.value.length<min||inputFiled.value.length>max){
+                  if(helpText!=null){
+                      helpText.innerHTML="建议输入长度为"+min+"到"+max;
+                      return false;
+                  }
               }else{
-                  document.getElementById("loginForm").submit();
+                  if(helpText!=null){
+                      helpText.innerHTML="";
+                      return true;
+                  }
               }
           }
+          function checkInput(){
+              if(validDataLength(3,15,rigisterForm["username1"],username1_help)&&validDataLength(3,15,rigisterForm["password1"],password1_help)){
+                  return true;
+              }else{
+                  alert("很抱歉，注册失败");
+                  return false;
+              }
+          }
+
       </script>
   </head>
   <body>
@@ -63,10 +84,14 @@
   <form method="post" action="LogOutServlet">
     <input type="submit" id="logout" value="注销">
   </form>
-  <form method="post" action="RegisterServlet">
-    账号:<input type="text" name="username" id="username1"><br/>
-    密码:<input type="password" name="password" id="password1"> <br/>
-   <input type="submit" id="register" value="注册"><br/>
+  <form id="rigisterForm" method="post" action="RegisterServlet">
+    账号:<input type="text" name="username" id="username1">
+      <span id="username1_help"></span>
+      <br/>
+    密码:<input type="password" name="password" id="password1">
+      <span id="password1_help"></span>
+      <br/>
+      <input type="submit" id="register" value="注册"><br/>
   </form>
   <%if(current_user!=null){%>
   <a href="ShowEssayServlet" target="_blank">显示我的文章列表</a>
