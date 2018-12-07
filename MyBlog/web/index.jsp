@@ -12,6 +12,20 @@
 <html>
   <head>
     <title>博客主页</title>
+      <script type="text/javascript">
+          window.onload=function (ev) {
+              document.getElementById("login").onclick=checkInput;
+          }
+          var checkInput=function () {
+              if(document.getElementById("username").value==""){
+                  alert("账号不能为空");
+              }else if(document.getElementById("password").value==""){
+                  alert("密码不能为空");
+              }else{
+                  document.getElementById("loginForm").submit();
+              }
+          }
+      </script>
   </head>
   <body>
 
@@ -39,7 +53,7 @@
       %>
   </header>
 
-  <form method="post" action="LoginServlet" >
+  <form id="loginForm" method="post"  action="LoginServlet" >
     账号:<input type="text" name="username" id="username">
     <br/>
     密码:<input type="password" name="password" id="password">
@@ -68,4 +82,5 @@
           <button onclick="f()">外部js</button>
       <script type="text/javascript" src="js/example2.js"></script>
   </body>
+
 </html>

@@ -21,10 +21,10 @@
 %>
 <div class="essay essay-"<%=essay.getId()%>">
 <hr>
-   <div class="title">
-       <%=essay.getTitle()%>
-   </div>
-   <hr>
+<div class="title">
+    <%=essay.getTitle()%>
+</div>
+<hr>
 <div class="username">
     作者：<%=essay.getUsername()%>
 </div>
@@ -39,6 +39,6 @@
 </footer>
 </div>
 
-  <%}%>
+<%}%>
 </body>
 </html>

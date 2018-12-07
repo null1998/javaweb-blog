@@ -9,42 +9,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title><%=((User)session.getAttribute("current_user")).getUsername()%>的文章列表</title>
+    <title>
+        <jsp:useBean id="current_user" class="com.sduhyd.blog.User" scope="session"/>
+        <jsp:getProperty name="current_user" property="username"/>的文章列表
+    </title>
 </head>
 <body>
-<%
-    ServletContext context = request.getServletContext();
-    Essay[] essays = (Essay[])context.getAttribute("essays");
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    for(Essay essay : essays) {
-        if(essay == null) {
-            System.out.println("found null essay");
-            continue;
-        }
-%>
-<div class="essay essay-<%=essay.getId()%>">
-    <hr>
-    <div class="title">
-        <%=essay.getTitle()%>
-    </div>
-    <hr>
-    <div class="content">
-        <%=essay.getArticle()%>
-    </div>
-    <hr>
-    <footer>
-        创建时间：<%=format.format(essay.getCreation_time())%> <br>
-        修改时间： <%=format.format(essay.getModify_time())%>
-    </footer>
-    <footer>
-        <button onclick="editEssay(<%=essay.getId()%>)">修改</button>
-        <button onclick="applyEdit(<%=essay.getId()%>)">提交</button>
-    </footer>
-</div>
-<hr>
-<%}%>
+
+<c:forEach var="essay" items="${applicationScope.essays}">
+<table>
+    <tr>${essay.title}</tr><br>
+    <tr>${essay.article}</tr><br>
+    <tr>${essay.creation_time}</tr><br>
+    <tr>${essay.modify_time}</tr><br>
+</table>
+</c:forEach>
+
 </body>
 <script>
     function applyEdit(essayId) {
