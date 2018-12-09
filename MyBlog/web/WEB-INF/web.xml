@@ -73,4 +73,20 @@
         <servlet-name>AllEssayServlet</servlet-name>
         <url-pattern>/AllEssayServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>SingleEssayServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.SingleEssayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SingleEssayServlet</servlet-name>
+        <url-pattern>/SingleEssayServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ToRigisterServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.ToRigisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ToRigisterServlet</servlet-name>
+        <url-pattern>/ToRigisterServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

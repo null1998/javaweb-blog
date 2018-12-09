@@ -12,15 +12,12 @@
 <html>
 <head>
     <title>Title</title>
-    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet'>
-    <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
 <c:forEach var="essay" items="${applicationScope.all_essays}">
-    <h1>${essay.title}</h1>
-    <p class="intro">${essay.article}</p>
-    <address>${essay.modify_time}</address>
-    <br/><br/><br/>
+    <div id="essay">
+        <h3><a href="SingleEssayServlet?id=${essay.id}">${essay.title}</a></h3>
+    </div>
 </c:forEach>
 
 </body>
