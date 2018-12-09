@@ -8,37 +8,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet'>
+    <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<%
-    ServletContext context = request.getServletContext();
-    ArrayList<Essay> arrayList =(ArrayList<Essay>)context.getAttribute("allEssay");
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    for(Essay essay : arrayList){
-%>
-<div class="essay essay-"<%=essay.getId()%>">
-<hr>
-<div class="title">
-    <%=essay.getTitle()%>
-</div>
-<hr>
-<div class="username">
-    作者：<%=essay.getUsername()%>
-</div>
-<hr>
-<div class="content">
-    <%=essay.getArticle()%>
-</div>
-<hr>
-<footer>
-    创建时间：<%=format.format(essay.getCreation_time())%><hr>
-    修改时间：<%=format.format(essay.getModify_time())%><hr>
-</footer>
-</div>
+<c:forEach var="essay" items="${applicationScope.all_essays}">
+    <h1>${essay.title}</h1>
+    <p class="intro">${essay.article}</p>
+    <address>${essay.modify_time}</address>
+    <br/><br/><br/>
+</c:forEach>
 
-<%}%>
 </body>
 </html>

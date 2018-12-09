@@ -13,54 +13,18 @@
 <html>
 <head>
     <title>
-        <jsp:useBean id="current_user" class="com.sduhyd.blog.User" scope="session"/>
-        <jsp:getProperty name="current_user" property="username"/>的文章列表
+        ${sessionScope.current_user.username}
+        <c:out value="的文章"></c:out>
     </title>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet'>
+    <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-
-<c:forEach var="essay" items="${applicationScope.essays}">
-<table>
-    <tr>${essay.title}</tr><br>
-    <tr>${essay.article}</tr><br>
-    <tr>${essay.creation_time}</tr><br>
-    <tr>${essay.modify_time}</tr><br>
-</table>
+<c:forEach var="my_essay" items="${sessionScope.my_essays}">
+    <h1>${my_essay.title}</h1>
+    <p class="intro">${my_essay.article}</p>
+    <address>${my_essay.modify_time}</address>
+    <br/><br/><br/>
 </c:forEach>
-
 </body>
-<script>
-    function applyEdit(essayId) {
-        const $essay = document.querySelector('.essay-'+essayId+'');
-        const $title = $essay.querySelector(".title");
-        const $content = $essay.querySelector(".content");
-        $title.contentEditable = false;
-        $content.contentEditable = false;
-        const newTitle = $title.innerText;
-        const newContent = $content.innerHTML;
-        const xhr = new XMLHttpRequest();
-        var formdata = {
-            id: essayId,
-            title: newTitle,
-            content: newContent
-        };
-        var encodedData = '';
-        for(var key in formdata) {
-            encodedData+= '&' + key + '=' + encodeURIComponent(formdata[key]);
-        }
-        xhr.open("POST", "UpdateEssayServlet", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(encodedData.slice(1));
-        xhr.onreadystatechange = function(e){
-            console.info('state change', e);
-        };
-    }
-    function editEssay(essayId) {
-        const $essay = document.querySelector('.essay-'+essayId+'');
-        const $title = $essay.querySelector(".title");
-        const $content = $essay.querySelector(".content");
-        $title.contentEditable = true;
-        $content.contentEditable = true;
-    }
-</script>
 </html>

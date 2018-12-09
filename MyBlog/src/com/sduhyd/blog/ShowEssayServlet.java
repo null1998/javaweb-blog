@@ -30,8 +30,10 @@ public class ShowEssayServlet extends HttpServlet {
         Connection conn=(Connection) getServletContext().getAttribute("conn");
         Integer current_user_id=current_user.getId();
         Essay[] essays=new Utils().showEssay(conn,current_user_id);
-        ServletContext context = request.getServletContext();
-        context.setAttribute("essays", essays);
+        synchronized (request.getSession(false)){
+            HttpSession session = request.getSession(false);
+            session.setAttribute("my_essays", essays);
+        }
         response.sendRedirect(request.getContextPath()+"/blog.jsp");
     }
 

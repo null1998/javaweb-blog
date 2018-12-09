@@ -8,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--port9191-->
 <html>
   <head>
@@ -45,40 +46,36 @@
                   return false;
               }
           }
+          function replaceNodeText(id,newText) {
+              var node=document.getElementById(id);
+              while(node.firstChild){
+                  node.removeChild(node.firstChild);
+              }
+              node.appendChild(document.createTextNode(newText));
+          }
 
       </script>
   </head>
   <body>
-
   <header>
       <h1>当前登录用户为：</h1>
-      <%
-        Cookie[]cookies=request.getCookies();
-        for(int i=0;i<cookies.length;i++){
-            Cookie cookie=cookies[i];
-            if(cookie.getName().equals("username")){
-                String username=cookie.getValue();
-                out.println("欢迎回来!"+"["+username+"]"+"<br/>");
-                break;
-            }
-        }
-
-      %>
-      <%
-      User current_user = (User)session.getAttribute("current_user");
-      if(current_user == null) {
-          out.print("<<没有登录>>");
-      } else {
-          out.print("用户"+"["+current_user.getUsername()+"]");
-      }
-      %>
+      <c:if test="${cookie.username.value!=null}">
+          <c:out value="欢迎回来${cookie.username.value}<br />" escapeXml="false"></c:out>
+      </c:if>
+      <c:choose>
+          <c:when test="${sessionScope.current_user!=null}">
+              <c:out value="用户${sessionScope.current_user.username}<br />" escapeXml="false"></c:out>
+          </c:when>
+          <c:otherwise>
+              <c:out value="没有登录<br />" escapeXml="false"></c:out>
+          </c:otherwise>
+      </c:choose>
   </header>
-
   <form id="loginForm" method="post"  action="LoginServlet" >
     账号:<input type="text" name="username" id="username">
     <br/>
     密码:<input type="password" name="password" id="password">
-      <br/>
+      <br />
     <input type="submit" id="login" value="登陆">
   </form>
   <form method="post" action="LogOutServlet">
@@ -87,13 +84,13 @@
   <form id="rigisterForm" method="post" action="RegisterServlet">
     账号:<input type="text" name="username" id="username1">
       <span id="username1_help"></span>
-      <br/>
+      <br />
     密码:<input type="password" name="password" id="password1">
       <span id="password1_help"></span>
-      <br/>
+      <br />
       <input type="submit" id="register" value="注册"><br/>
   </form>
-  <%if(current_user!=null){%>
+  <c:if test="${sessionScope.current_user!=null}">
   <a href="ShowEssayServlet" target="_blank">显示我的文章列表</a>
   <fieldset>
       <legend>Personal information:</legend>
@@ -102,10 +99,8 @@
     <textarea name="create_article" cols="30" rows="10"></textarea>
     <input type="submit" value="新增">
   </form>
-  <%}%>
+      </c:if>
       <a href="AllEssayServlet" target="_blank">全部文章</a>
-          <button onclick="f()">外部js</button>
-      <script type="text/javascript" src="js/example2.js"></script>
   </body>
 
 </html>

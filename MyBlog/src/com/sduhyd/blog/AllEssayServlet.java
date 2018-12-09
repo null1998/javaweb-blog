@@ -26,7 +26,9 @@ public class AllEssayServlet extends HttpServlet {
         ServletContext  context = request.getServletContext();
         Connection conn=(Connection) context.getAttribute("conn");
         ArrayList<Essay> arrayList = new Utils().allEssay(conn);
-        context.setAttribute("allEssay",arrayList);
+        synchronized (request.getServletContext()){
+            context.setAttribute("all_essays",arrayList);
+        }
         response.sendRedirect(request.getContextPath()+"/allblog.jsp");
     }
     @Override
