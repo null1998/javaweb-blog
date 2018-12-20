@@ -35,7 +35,7 @@ public class CreateEssayServlet extends HttpServlet {
         String article = request.getParameter("create_article");
         Date modify_time=new Date();
         new Utils().createEssay(conn,user_id,title,article,modify_time,username);
-        response.sendRedirect(request.getContextPath()+"/index.jsp");
+        response.sendRedirect(request.getContextPath()+"/page/main.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

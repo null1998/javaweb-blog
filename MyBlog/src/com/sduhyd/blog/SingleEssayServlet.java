@@ -29,7 +29,7 @@ public class SingleEssayServlet extends HttpServlet {
                    System.out.println("插入"+essays.get(i).getId());
                }
             }
-            request.getRequestDispatcher("/singleBlog.jsp").forward(request,response);
+            request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
 
     }
 }

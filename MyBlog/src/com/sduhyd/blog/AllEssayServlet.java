@@ -29,7 +29,7 @@ public class AllEssayServlet extends HttpServlet {
         synchronized (request.getServletContext()){
             context.setAttribute("all_essays",arrayList);
         }
-        response.sendRedirect(request.getContextPath()+"/allblog.jsp");
+        response.sendRedirect(request.getContextPath()+"/page/main.jsp");
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

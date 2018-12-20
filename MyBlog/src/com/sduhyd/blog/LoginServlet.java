@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         }else {
             System.out.println("登录失败！");
         }
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/page/main.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

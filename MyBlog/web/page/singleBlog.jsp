@@ -18,7 +18,7 @@
     <div class="container" id="main">
       <div class="head">
           <div class="title">
-              <a href="index.jsp">返回主页</a>
+              <a href="/page/main.jsp">返回主页</a>
           </div>
       </div>
         <!--文章基本信息-->
@@ -47,7 +47,7 @@
         <!-- 评论 -->
         <div class="comment">
             <div class="write">
-                <a href="#comment"><span>写评论</span></a>
+                <a href="write_comment.jsp"><span>写评论</span></a>
             </div>
             <c:if test="${requestScope.comments!=null}">
                 <c:forEach var="comment" items="requestScope.comments">
@@ -60,7 +60,7 @@
                             <span>${comment.content}</span>
                         </div>
                         <div>
-                            <span>${comment.start}</span>
+                            <span>${comment.star}</span>
                             <span>${comment.diss}</span>
                         </div>
                     </div>
