@@ -46,7 +46,7 @@
         <!--点赞-->
         <div>
             <a href="/StarServlet?id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">&nbsp;</span></a>
-            <a href="/DissServlet?id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+            <a href="/DisServlet?id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
         </div>
         <!-- 评论 -->
         <div>

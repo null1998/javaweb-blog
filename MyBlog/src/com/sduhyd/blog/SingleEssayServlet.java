@@ -20,15 +20,15 @@ public class SingleEssayServlet extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=utf-8");
             ArrayList<Essay> essays=null;
-        Connection conn=(Connection) getServletContext().getAttribute("conn");
+            Connection conn=(Connection) getServletContext().getAttribute("conn");
             synchronized (getServletContext()){
                 ServletContext context=getServletContext();
                 essays=(ArrayList<Essay>) context.getAttribute("all_essays");
             }
             for(int i=0;i<essays.size();i++){
                if(essays.get(i).getId().equals(Integer.valueOf(request.getParameter("id")))){
-                   new Utils().visitor(conn,Integer.valueOf(request.getParameter("id")));
-                   request.setAttribute("current_essay",essays.get(i));
+                   Essay essay=new Utils().visitor(conn,Integer.valueOf(request.getParameter("id")),essays.get(i));
+                   request.setAttribute("current_essay",essay);
                }
             }
             request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);

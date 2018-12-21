@@ -98,12 +98,12 @@
         <url-pattern>/StarServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>DissServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.DissServlet</servlet-class>
+        <servlet-name>DisServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.DisServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DissServlet</servlet-name>
-        <url-pattern>/DissServlet</url-pattern>
+        <servlet-name>DisServlet</servlet-name>
+        <url-pattern>/DisServlet</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>CommentServlet</servlet-name>
@@ -112,5 +112,5 @@
     <servlet-mapping>
         <servlet-name>CommentServlet</servlet-name>
         <url-pattern>/CommentServlet</url-pattern>
-    </servlet-mapping>e
+    </servlet-mapping>
 </web-app>

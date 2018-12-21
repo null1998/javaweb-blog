@@ -184,7 +184,6 @@ public class Utils {
                     essay.setUsername(rs.getString("username"));
                     essay.setTitle(rs.getString("title"));
                     essay.setArticle(rs.getString("article"));
-                    //System.out.println(rs.getDate("creation_time").getTime());
                     essay.setCreation_time(rs.getDate("creation_time"));
                     essay.setModify_time(rs.getDate("modify_time"));
                     essay.setStar(rs.getInt("star"));
@@ -202,20 +201,101 @@ public class Utils {
 
             return arrayList;
     }
-    public void visitor(Connection conn, int essay_id){
+    public Essay visitor(Connection conn, int essay_id,Essay essay){
+
         try{
             String sql="select visitor from BLOG_TB_ESSAY where id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setInt(1,essay_id);
             ResultSet rs=statement.executeQuery();
-            Integer visitor=0;
+            Integer visitor=null;
             while(rs.next()){
                  visitor=rs.getInt("visitor");
                  visitor++;
+                 essay.setVisitor(visitor);
+                String sql1="update BLOG_TB_ESSAY set visitor=? where id=?";
+                PreparedStatement statement1=conn.prepareStatement(sql1);
+                statement1.setInt(1,visitor);
+                statement1.setInt(2,essay_id);
+                statement1.executeUpdate();
+                statement1.close();
+            }
+            rs.close();
+            statement.close();
+            return essay;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return essay;
+
+    }
+    public Essay star(Connection conn, int essay_id,Essay essay){
+        try{
+            String sql="select star from BLOG_TB_ESSAY where id=?";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,essay_id);
+            ResultSet rs=statement.executeQuery();
+            Integer star=0;
+            while(rs.next()){
+                star=rs.getInt("star");
+                star++;
+                essay.setStar(star);
+            String sql1="update BLOG_TB_ESSAY set star=? where id=?";
+            PreparedStatement statement1=conn.prepareStatement(sql1);
+            statement1.setInt(1,star);
+            statement1.setInt(2,essay_id);
+            statement1.executeUpdate();
+            statement1.close();
+            }
+            rs.close();
+            statement.close();
+           return essay;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+               return essay;
+    }
+    public Essay diss(Connection conn, int essay_id,Essay essay){
+        try{
+            String sql="select diss from BLOG_TB_ESSAY where id=?";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,essay_id);
+            ResultSet rs=statement.executeQuery();
+            Integer diss=0;
+            while(rs.next()) {
+                diss = rs.getInt("diss");
+                diss++;
+                essay.setDiss(diss);
+                String sql1 = "update BLOG_TB_ESSAY set diss=? where id=?";
+                PreparedStatement statement1 = conn.prepareStatement(sql1);
+                statement1.setInt(1, diss);
+                statement1.setInt(2, essay_id);
+                statement1.executeUpdate();
+                statement1.close();
+                return essay;
+            }
+            rs.close();
+            statement.close();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+           return essay;
+    }
+    public void comments(Connection conn, int essay_id){
+        try{
+            String sql="select comments from BLOG_TB_ESSAY where id=?";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,essay_id);
+            ResultSet rs=statement.executeQuery();
+            Integer comments=0;
+            while(rs.next()){
+                comments=rs.getInt("comments");
+                comments++;
             }
             String sql1="update BLOG_TB_ESSAY set visitor=? where id=?";
             PreparedStatement statement1=conn.prepareStatement(sql1);
-            statement1.setInt(1,visitor);
+            statement1.setInt(1,comments);
             statement1.setInt(2,essay_id);
             statement1.executeUpdate();
             rs.close();
@@ -225,7 +305,8 @@ public class Utils {
             e.printStackTrace();
         }
 
-        }
+    }
+
 
 
 }
