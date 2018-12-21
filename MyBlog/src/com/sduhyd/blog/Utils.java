@@ -27,14 +27,16 @@ public class Utils {
                     preparedstatement.close();
                 }
                 //注册成功后封装为User类返回
-                ResultSet rs1= statement.executeQuery();
+                String sql_find="select *from BLOG_TB_USER where username = ?";
+                PreparedStatement statement1 = conn.prepareStatement(sql_find);
+                statement1.setString(1,username);
+                ResultSet rs1= statement1.executeQuery();
                 try {
                     if(rs1.first()) {
                         User user = new User();
-                        Integer id=rs1.getInt(1);
-                        //Integer id = rs1.getInt("id");不知为何用列标签的方法会显示无法查询
-                        String qusername = rs1.getString(1);
-                        String qpassword = rs1.getString(1);
+                        Integer id=rs1.getInt("id");
+                        String qusername = rs1.getString("username");
+                        String qpassword = rs1.getString("password");
                         user.setId(id);
                         user.setUsername(qusername);
                         user.setPassword(qpassword);
@@ -77,12 +79,11 @@ public class Utils {
         return null;
     }
 
-    public  Essay createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time,String username){
+    public  boolean createEssay(Connection conn,Integer user_id, String title, String article, Date modify_time,String username){
 
         java.sql.Date sql_date = new java.sql.Date(modify_time.getTime());
-            Essay essay = new Essay();
         try{
-                String create_sql="insert into BLOG_TB_ESSAY(user_id,title,article,creation_time,modify_time,username)values(?,?,?,?,?,?) ";
+                String create_sql="insert into BLOG_TB_ESSAY(user_id,title,article,creation_time,modify_time,username,star,diss,comments,visitor)values(?,?,?,?,?,?,?,?,?,?) ";
                 PreparedStatement statement = conn.prepareStatement(create_sql);
                 statement.setInt(1, user_id);
                 statement.setString(2, title);
@@ -91,16 +92,18 @@ public class Utils {
                 statement.setDate(4,sql_date);
                 statement.setDate(5,sql_date);
                 statement.setString(6, username);
+                statement.setInt(7, 0);
+                statement.setInt(8, 0);
+                statement.setInt(9, 0);
+                statement.setInt(10, 0);
                 statement.executeUpdate();
-                essay.setUser_id(user_id);
-                essay.setTitle(title);
-                essay.setArticle(article);
                 System.out.println(username+"新增了博客");
+                return true;
             }catch (SQLException e){
                 e.printStackTrace();
             }
 
-            return essay;
+            return false;
     }
     public  Essay[] showEssay(Connection conn,Integer user_id){
 
@@ -184,6 +187,10 @@ public class Utils {
                     //System.out.println(rs.getDate("creation_time").getTime());
                     essay.setCreation_time(rs.getDate("creation_time"));
                     essay.setModify_time(rs.getDate("modify_time"));
+                    essay.setStar(rs.getInt("star"));
+                    essay.setDiss(rs.getInt("diss"));
+                    essay.setComments(rs.getInt("comments"));
+                    essay.setVisitor(rs.getInt("visitor"));
                     arrayList.add(essay);
                 }
                 System.out.println("查看全部文章成功");
@@ -195,6 +202,30 @@ public class Utils {
 
             return arrayList;
     }
+    public void visitor(Connection conn, int essay_id){
+        try{
+            String sql="select visitor from BLOG_TB_ESSAY where id=?";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,essay_id);
+            ResultSet rs=statement.executeQuery();
+            Integer visitor=0;
+            while(rs.next()){
+                 visitor=rs.getInt("visitor");
+                 visitor++;
+            }
+            String sql1="update BLOG_TB_ESSAY set visitor=? where id=?";
+            PreparedStatement statement1=conn.prepareStatement(sql1);
+            statement1.setInt(1,visitor);
+            statement1.setInt(2,essay_id);
+            statement1.executeUpdate();
+            rs.close();
+            statement.close();
+            statement1.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        }
 
 
 }

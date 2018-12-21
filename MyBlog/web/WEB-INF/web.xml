@@ -89,4 +89,28 @@
         <servlet-name>ToRigisterServlet</servlet-name>
         <url-pattern>/ToRigisterServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>StarServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.StarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StarServlet</servlet-name>
+        <url-pattern>/StarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DissServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.DissServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DissServlet</servlet-name>
+        <url-pattern>/DissServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CommentServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.CommentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommentServlet</servlet-name>
+        <url-pattern>/CommentServlet</url-pattern>
+    </servlet-mapping>e
 </web-app>

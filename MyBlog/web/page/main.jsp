@@ -95,7 +95,10 @@
                     <h4>${essay.title}</h4>
                     <br/>
                     <span>${essay.creation_time}&nbsp;&nbsp;|</span>
-                    <span>阅读次数:</span>
+                    <span>访问量${essay.visitor}&nbsp;&nbsp;</span>
+                    <span class="glyphicon glyphicon-thumbs-up">${essay.star}&nbsp;</span>
+                    <span class="glyphicon glyphicon-thumbs-down">${essay.diss}&nbsp;</span>
+                    <span class="glyphicon glyphicon-comment">${essay.comments}</span>
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>

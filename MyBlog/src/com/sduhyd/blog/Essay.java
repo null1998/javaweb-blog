@@ -8,6 +8,10 @@ public class Essay {
     private String article;
     private Date creation_time;
     private Date modify_time;
+    private Integer star;
+    private Integer diss;
+    private Integer comments;
+    private Integer visitor;
 
     public Integer getId() {
         return id;
@@ -63,5 +67,37 @@ public class Essay {
 
     public void setCreation_time(Date creation_time) {
         this.creation_time = creation_time;
+    }
+
+    public Integer getStar() {
+        return star;
+    }
+
+    public Integer getDiss() {
+        return diss;
+    }
+
+    public Integer getComments() {
+        return comments;
+    }
+
+    public Integer getVisitor() {
+        return visitor;
+    }
+
+    public void setStar(Integer star) {
+        this.star = star;
+    }
+
+    public void setDiss(Integer diss) {
+        this.diss = diss;
+    }
+
+    public void setComments(Integer comments) {
+        this.comments = comments;
+    }
+
+    public void setVisitor(Integer visitor) {
+        this.visitor = visitor;
     }
 }

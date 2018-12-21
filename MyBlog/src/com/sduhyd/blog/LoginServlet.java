@@ -33,10 +33,11 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("current_user", user);
             }
             System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
+            response.sendRedirect("/AllEssayServlet");
         }else {
             System.out.println("登录失败！");
         }
-        response.sendRedirect(request.getContextPath() + "/page/main.jsp");
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

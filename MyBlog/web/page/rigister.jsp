@@ -50,10 +50,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="rigister" class="col-sm-3 control-label">提交：</label>
+                <label for="rigister" class="col-sm-3 control-label">注册</label>
                     <div class="col-sm-8">
                         <div class="input-group">
-                        <button type="submit" class="btn btn-info btn-block" id="rigister"><b>&nbsp&nbsp提交&nbsp&nbsp</b>
+                        <button type="submit" class="btn btn-info btn-block" id="rigister"><b>&nbsp&nbsp注册&nbsp&nbsp</b>
                             <span class="glyphicon glyphicon-arrow-right"></span></button>
                         </div>
                     </div>
