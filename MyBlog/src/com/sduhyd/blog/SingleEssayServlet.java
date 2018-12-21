@@ -25,6 +25,8 @@ public class SingleEssayServlet extends HttpServlet {
                 ServletContext context=getServletContext();
                 essays=(ArrayList<Essay>) context.getAttribute("all_essays");
             }
+            Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("id")));
+            request.setAttribute("current_comments",comments);
             for(int i=0;i<essays.size();i++){
                if(essays.get(i).getId().equals(Integer.valueOf(request.getParameter("id")))){
                    Essay essay=new Utils().visitor(conn,Integer.valueOf(request.getParameter("id")),essays.get(i));

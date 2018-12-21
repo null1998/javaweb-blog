@@ -1,5 +1,7 @@
 package com.sduhyd.blog;
 
+import java.util.Date;
+
 public class Comment {
     private Integer id;
     private String username;
@@ -8,6 +10,15 @@ public class Comment {
     private Integer star;
     private Integer diss;
     private String content;
+    private Date creation_time;
+
+    public Date getCreation_time() {
+        return creation_time;
+    }
+
+    public void setCreation_time(Date creation_time) {
+        this.creation_time = creation_time;
+    }
 
     public Integer getId() {
         return id;

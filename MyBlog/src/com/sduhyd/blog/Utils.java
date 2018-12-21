@@ -107,8 +107,9 @@ public class Utils {
     }
     public  Essay[] showEssay(Connection conn,Integer user_id){
 
-        try{
+        try {
             //统计用户的文章数
+
             String selectCountSql = "select count(*) from BLOG_TB_ESSAY where user_id=?";
             int count = 0;
             {
@@ -117,11 +118,11 @@ public class Utils {
                 ResultSet rs = statement.executeQuery();
                 rs.first();
                 count = rs.getInt(1);
-                if(count < 1)  {
+                if (count < 1) {
+                    rs.close();
+                    statement.close();
                     return new Essay[0];
                 }
-                rs.close();
-                statement.close();
             }
             //开始从文章表里提取文章
             String sql_show="select *from BLOG_TB_ESSAY where user_id=?";
@@ -240,7 +241,7 @@ public class Utils {
                 star=rs.getInt("star");
                 star++;
                 essay.setStar(star);
-            String sql1="update BLOG_TB_ESSAY set star=? where id=?";
+                String sql1="update BLOG_TB_ESSAY set star=? where id=?";
             PreparedStatement statement1=conn.prepareStatement(sql1);
             statement1.setInt(1,star);
             statement1.setInt(2,essay_id);
@@ -282,6 +283,68 @@ public class Utils {
         }
            return essay;
     }
+    public void WriteComments(Connection conn,int essay_id,String comment,User user){
+        try{
+            String sql="insert into BLOG_TB_COMMENT(essay_id,star,diss,username,content,user_id,creation_time)values(?,?,?,?,?,?,?)";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,essay_id);
+            statement.setInt(2,0);
+            statement.setInt(3,0);
+            statement.setString(4,user.getUsername());
+            statement.setString(5,comment);
+            statement.setInt(6,user.getId());
+            java.sql.Date sql_date = new java.sql.Date(new Date().getTime());
+            statement.setDate(7,sql_date);
+            statement.executeUpdate();
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public Comment[] getComments(Connection conn,int essay_id){
+        Comment[]comments=null;
+        try{
+            String sql="select count(*) from BLOG_TB_COMMENT where essay_id=?";
+            int count=0;
+            {
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, essay_id);
+                ResultSet rs = statement.executeQuery();
+                rs.first();
+                count=rs.getInt(1);
+                if ( count< 1) {
+                    comments = new Comment[0];
+                    rs.close();
+                    statement.close();
+                    return comments;
+                }
+             }
+            String sql2="select *from BLOG_TB_COMMENT where essay_id=?";
+            PreparedStatement statement = conn.prepareStatement(sql2);
+            statement.setInt(1, essay_id);
+            ResultSet rs = statement.executeQuery();
+             comments=new Comment[count];
+             int tmp=0;
+             while(rs.next()){
+                 Comment comment=new Comment();
+                 comment.setId(rs.getInt("id"));
+                 comment.setUser_id(rs.getInt("user_id"));
+                 comment.setEssay_id(rs.getInt("essay_id"));
+                 comment.setStar(rs.getInt("star"));
+                 comment.setDiss(rs.getInt("diss"));
+                 comment.setUsername(rs.getString("username"));
+                 comment.setContent(rs.getString("content"));
+                 comment.setCreation_time(rs.getDate("creation_time"));
+                 comments[tmp]=comment;
+                 tmp++;
+             }
+             rs.close();;
+             statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return comments;
+    }
     public void comments(Connection conn, int essay_id){
         try{
             String sql="select comments from BLOG_TB_ESSAY where id=?";
@@ -305,6 +368,29 @@ public class Utils {
             e.printStackTrace();
         }
 
+    }
+    public void starCom(Connection conn,Integer comment_id){
+        try{
+            String sql="select star from BLOG_TB_COMMENT where id=?";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,comment_id);
+            ResultSet rs=statement.executeQuery();
+            Integer star=0;
+            while(rs.next()){
+                star=rs.getInt("star");
+                star++;
+                String sql1="update BLOG_TB_COMMENT set star=? where id=?";
+                PreparedStatement statement1=conn.prepareStatement(sql1);
+                statement1.setInt(1,star);
+                statement1.setInt(2,comment_id);
+                statement1.executeUpdate();
+                statement1.close();
+            }
+            rs.close();
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
 

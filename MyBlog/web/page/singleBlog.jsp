@@ -51,21 +51,42 @@
         <!-- 评论 -->
         <div>
             <div>
-                <a href="write_comment.jsp"><span class="glyphicon glyphicon-edit">写评论</span></a>
+                <c:choose>
+                    <c:when test="${sessionScope.current_user!=null}">
+                        <span class="glyphicon glyphicon-edit">写评论</span>
+                        <br>
+                        <!--隐藏input，好东西-->
+                        <form role="form" action="/CommentServlet" method="post">
+                            <input type="hidden" name="id" value="${requestScope.current_essay.id}">
+                            <div class="form-group">
+                                <label for="content">文本框</label>
+                                <textarea id="content" name="comment" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/page/login.jsp"><span class="glyphicon glyphicon-edit">登陆后方可评论</span></a>
+                        <br>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <c:if test="${requestScope.comments!=null}">
-                <c:forEach var="comment" items="requestScope.comments">
-                    <div>
-                        <div>
-                          <span>${comment.username}</span>
-                            <span>${comment.time}</span>
+
+            <c:if test="${requestScope.current_comments!=null}">
+                <c:forEach var="comment" items="${requestScope.current_comments}">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">${comment.username}</h3>
+                            <span>${comment.creation_time}</span>
+                            <a href="/StarComServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${comment.star}&nbsp;</span></a>
+                            <a href="/DisComServlet?id=${comment.id}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
                         </div>
-                        <div>
-                            <span>${comment.content}</span>
-                        </div>
-                        <div>
-                            <span>${comment.star}</span>
-                            <span>${comment.diss}</span>
+                        <div class="panel-body">
+                            ${comment.content}
                         </div>
                     </div>
                 </c:forEach>

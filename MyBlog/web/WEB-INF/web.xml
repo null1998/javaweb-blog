@@ -113,4 +113,20 @@
         <servlet-name>CommentServlet</servlet-name>
         <url-pattern>/CommentServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>StarComServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.StarComServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StarComServlet</servlet-name>
+        <url-pattern>/StarComServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DisComServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.DisComServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisComServlet</servlet-name>
+        <url-pattern>/DisComServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

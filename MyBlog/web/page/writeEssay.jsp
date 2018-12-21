@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <label for="content">文本框</label>
-        <textarea id="content" name="create_article" class="form-control" rows="3"></textarea>
+        <textarea id="content" name="create_article" class="form-control" rows="12"></textarea>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
