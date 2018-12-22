@@ -25,12 +25,12 @@ public class SingleEssayServlet extends HttpServlet {
                 ServletContext context=getServletContext();
                 essays=(Essay[]) context.getAttribute("all_essays");
             }
-            Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("id")));
+            Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("essay_id")));
             Comment[]sort_comments=new SortUtils().sortCom(comments);
             request.setAttribute("current_comments",sort_comments);
             for(int i=0;i<essays.length;i++){
-               if(essays[i].getId().equals(Integer.valueOf(request.getParameter("id")))){
-                   Essay essay=new Utils().visitor(conn,Integer.valueOf(request.getParameter("id")),essays[i]);
+               if(essays[i].getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
+                   Essay essay=new Utils().visitor(conn,Integer.valueOf(request.getParameter("essay_id")),essays[i]);
                    request.setAttribute("current_essay",essay);
                }
             }

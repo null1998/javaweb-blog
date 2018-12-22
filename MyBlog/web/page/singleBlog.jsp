@@ -13,6 +13,7 @@
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="/css/singleblog.css" rel="stylesheet">
+    <script src="../js/writeComment.js"></script>
 </head>
 <body>
     <div>
@@ -45,8 +46,8 @@
         </div>
         <!--点赞-->
         <div>
-            <a href="/StarServlet?id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">&nbsp;</span></a>
-            <a href="/DisServlet?id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+            <a href="/StarServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${requestScope.current_essay.star}&nbsp;</span></a>
+            <a href="/DisServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}</span></a>
         </div>
         <!-- 评论 -->
         <div>
@@ -56,15 +57,15 @@
                         <span class="glyphicon glyphicon-edit">写评论</span>
                         <br>
                         <!--隐藏input，好东西-->
-                        <form role="form" action="/CommentServlet" method="post">
-                            <input type="hidden" name="id" value="${requestScope.current_essay.id}">
+                        <form role="form" action="/CommentServlet" method="post" name="writeComForm">
+                            <input type="hidden" name="essay_id" value="${requestScope.current_essay.id}">
                             <div class="form-group">
                                 <label for="content">文本框</label>
                                 <textarea id="content" name="comment" class="form-control" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <div>
-                                    <button type="submit" class="btn btn-default">提交</button>
+                                    <button type="submit" class="btn btn-default" id="writeComment">提交</button>
                                 </div>
                             </div>
                         </form>

@@ -26,10 +26,11 @@ public class RegisterServlet extends HttpServlet {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         User user=new Utils().register(conn,username,password);
-        response.sendRedirect("/AllEssayServlet");
         if(user != null) {
             System.out.println("用户 "+user.getUsername()+" 注册成功！");
+            response.sendRedirect("/AllEssayServlet");
         }else {
+            response.sendRedirect("/page/errorPage1.jsp");
             System.out.println("注册失败");
         }
     }

@@ -32,12 +32,13 @@ public class CommentServlet extends HttpServlet {
             essays=(Essay[]) context.getAttribute("all_essays");
         }
         for(int i=0;i<essays.length;i++){
-            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("id")))){
-                request.setAttribute("current_essay",essays[i]);
+            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
+                Essay essay=new Utils().comments(conn,Integer.valueOf(request.getParameter("essay_id")),essays[i]);
+                request.setAttribute("current_essay",essay);
             }
         }
         String commentContent=request.getParameter("comment");
-        Integer essay_id=Integer.valueOf(request.getParameter("id"));
+        Integer essay_id=Integer.valueOf(request.getParameter("essay_id"));
         new Utils().WriteComments(conn,essay_id,commentContent,current_user);
         request.getRequestDispatcher("/SingleEssayServlet").forward(request,response);
     }

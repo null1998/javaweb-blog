@@ -8,13 +8,13 @@
     <title>博客主页</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/cs/main.css">
+    <link rel="stylesheet" href="/css/main.css">
     <script src="../js/main.js"></script>
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1>我的第一个 Blog 页面</h1>
-    <p>重置浏览器窗口大小查看效果！</p>
+    <h1>我的第一个博客页面</h1>
+    <p>good good study,day day up!</p>
 </div>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -60,26 +60,27 @@
         <div class="col-sm-8">
             <h2>标题</h2>
             <h5>副标题</h5>
-            <div class="fakeimg">图像</div>
-            <p>一些文本..</p>
+            <div class="fakeimg">一张图片</div>
+            <p>一些文本</p>
             <p></p>
-            <br>
             <h2>标题</h2>
             <h5>副标题</h5>
-            <div class="fakeimg">图像</div>
-            <p>一些文本..</p>
+            <div></div>
+            <p>第一段</p>
+            <p>第二段</p>
+            <p>第三段</p>
             <p></p>
         </div>
         <div class="col-sm-4">
             <h2>关于我</h2>
             <h5>我的照片:</h5>
-            <div class="fakeimg">这边插入图像</div>
+            <div class="fakeimg"></div>
             <p>关于我的介绍..</p>
             <h3>热门排行</h3>
             <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
-                <c:forEach var="topessay" items="${applicationScope.top_essays}">
-                    <li><a href="/SingleEssayServlet?id=${topessay.id}"><span class="glyphicon glyphicon-thumbs-up">${topessay.star}&nbsp;${topessay.title}&nbsp;</span></a></li>
+                <c:forEach var="top_essay" items="${applicationScope.top_essays}">
+                    <li><a href="/SingleEssayServlet?id=${top_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
                 </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -100,7 +101,7 @@
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>
-                    <a href="/SingleEssayServlet?id=${essay.id}">阅读全文</a>
+                    <a href="/SingleEssayServlet?essay_id=${essay.id}">阅读全文</a>
                     <br/>
                 </div>
                 </c:forEach>

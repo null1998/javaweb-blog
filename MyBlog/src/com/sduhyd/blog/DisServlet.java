@@ -24,11 +24,14 @@ public class DisServlet extends HttpServlet {
             essays=(Essay[]) context.getAttribute("all_essays");
         }
         for(int i=0;i<essays.length;i++){
-            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("id")))){
-                Essay essay=new Utils().diss(conn,Integer.valueOf(request.getParameter("id")),essays[i]);
+            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
+                Essay essay=new Utils().diss(conn,Integer.valueOf(request.getParameter("essay_id")),essays[i]);
                 request.setAttribute("current_essay",essay);
             }
         }
+        Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("essay_id")));
+        Comment[]sort_comments=new SortUtils().sortCom(comments);
+        request.setAttribute("current_comments",sort_comments);
         request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
     }
 }
