@@ -10,20 +10,23 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="../js/writeEssay.js"></script>
 </head>
 <body>
-<form role="form" action="/CreateEssayServlet" method="post">
+<form role="form" action="/CreateEssayServlet" method="post" name="writeForm">
     <div class="form-group">
         <label for="title">标签</label>
         <input type="text" id="title" name="create_title" class="form-control" placeholder="文本输入">
+        <span id="title_help"></span>
     </div>
     <div class="form-group">
         <label for="content">文本框</label>
         <textarea id="content" name="create_article" class="form-control" rows="12"></textarea>
+        <span id="content_help"></span>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">提交</button>
+            <button type="submit" class="btn btn-default" id="write">提交</button>
         </div>
     </div>
 </form>

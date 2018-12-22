@@ -392,6 +392,29 @@ public class Utils {
             e.printStackTrace();
         }
     }
+    public void disCom(Connection conn,Integer comment_id){
+        try{
+            String sql="select diss from BLOG_TB_COMMENT where id=?";
+            PreparedStatement statement=conn.prepareStatement(sql);
+            statement.setInt(1,comment_id);
+            ResultSet rs=statement.executeQuery();
+            Integer diss=0;
+            while(rs.next()){
+                diss=rs.getInt("diss");
+                diss++;
+                String sql1="update BLOG_TB_COMMENT set diss=? where id=?";
+                PreparedStatement statement1=conn.prepareStatement(sql1);
+                statement1.setInt(1,diss);
+                statement1.setInt(2,comment_id);
+                statement1.executeUpdate();
+                statement1.close();
+            }
+            rs.close();
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 
 
 

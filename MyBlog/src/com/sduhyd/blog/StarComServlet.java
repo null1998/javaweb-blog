@@ -17,22 +17,23 @@ public class StarComServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<Essay> essays=null;
+        Essay[] essays=null;
         Connection conn=(Connection) getServletContext().getAttribute("conn");
         synchronized (getServletContext()){
             ServletContext context=getServletContext();
-            essays=(ArrayList<Essay>) context.getAttribute("all_essays");
+            essays=(Essay[]) context.getAttribute("all_essays");
         }
-        for(int i=0;i<essays.size();i++){
-            if(essays.get(i).getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
-                request.setAttribute("current_essay",essays.get(i));
+        for(int i=0;i<essays.length;i++){
+            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
+                request.setAttribute("current_essay",essays[i]);
             }
         }
 
         Integer comment_id=Integer.valueOf(request.getParameter("comment_id"));
         new Utils().starCom(conn,comment_id);
         Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("essay_id")));
-        request.setAttribute("current_comments",comments);
+        Comment[]sort_comments=new SortUtils().sortCom(comments);
+        request.setAttribute("current_comments",sort_comments);
         request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
     }
 }

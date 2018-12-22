@@ -29,8 +29,6 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="main.jsp"><span class="glyphicon glyphicon-home"></span>首页</a></li>
-                <li><a href="AllEssayServlet">页面2</a></li>
-                <li><a href="#">页面 3</a></li>
             </ul>
             <c:choose>
                 <c:when test="${sessionScope.current_user==null}">
@@ -77,12 +75,12 @@
             <h5>我的照片:</h5>
             <div class="fakeimg">这边插入图像</div>
             <p>关于我的介绍..</p>
-            <h3>链接</h3>
-            <p>描述文本。</p>
+            <h3>热门排行</h3>
+            <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">链接 1</a></li>
-                <li><a href="#">链接 2</a></li>
-                <li><a href="#">链接 3</a></li>
+                <c:forEach var="topessay" items="${applicationScope.top_essays}">
+                    <li><a href="/SingleEssayServlet?id=${topessay.id}"><span class="glyphicon glyphicon-thumbs-up">${topessay.star}&nbsp;${topessay.title}&nbsp;</span></a></li>
+                </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
         </div>

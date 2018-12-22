@@ -26,9 +26,15 @@ public class AllEssayServlet extends HttpServlet {
         ServletContext  context = request.getServletContext();
         Connection conn=(Connection) context.getAttribute("conn");
         ArrayList<Essay> arrayList = new Utils().allEssay(conn);
-        synchronized (request.getServletContext()){
-            context.setAttribute("all_essays",arrayList);
+        if (!arrayList.isEmpty()) {
+            Essay[]all_essays=new SortUtils().reverseEssay(arrayList);
+            Essay[]top_essays=new SortUtils().sortEssay(arrayList);
+            synchronized (request.getServletContext()){
+                context.setAttribute("all_essays",all_essays);
+                context.setAttribute("top_essays",top_essays);
+            }
         }
+
         response.sendRedirect(request.getContextPath()+"/page/main.jsp");
     }
     @Override

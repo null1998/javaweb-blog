@@ -19,17 +19,18 @@ public class SingleEssayServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             request.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=utf-8");
-            ArrayList<Essay> essays=null;
+            Essay[]essays=null;
             Connection conn=(Connection) getServletContext().getAttribute("conn");
             synchronized (getServletContext()){
                 ServletContext context=getServletContext();
-                essays=(ArrayList<Essay>) context.getAttribute("all_essays");
+                essays=(Essay[]) context.getAttribute("all_essays");
             }
             Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("id")));
-            request.setAttribute("current_comments",comments);
-            for(int i=0;i<essays.size();i++){
-               if(essays.get(i).getId().equals(Integer.valueOf(request.getParameter("id")))){
-                   Essay essay=new Utils().visitor(conn,Integer.valueOf(request.getParameter("id")),essays.get(i));
+            Comment[]sort_comments=new SortUtils().sortCom(comments);
+            request.setAttribute("current_comments",sort_comments);
+            for(int i=0;i<essays.length;i++){
+               if(essays[i].getId().equals(Integer.valueOf(request.getParameter("id")))){
+                   Essay essay=new Utils().visitor(conn,Integer.valueOf(request.getParameter("id")),essays[i]);
                    request.setAttribute("current_essay",essay);
                }
             }

@@ -21,7 +21,7 @@ public class CommentServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         User current_user=null;
-        ArrayList<Essay> essays=null;
+        Essay[] essays=null;
         Connection conn=(Connection) getServletContext().getAttribute("conn");
         synchronized (request.getSession(false)){
             HttpSession session=request.getSession(false);;
@@ -29,11 +29,11 @@ public class CommentServlet extends HttpServlet {
         }
         synchronized (getServletContext()){
             ServletContext context=getServletContext();
-            essays=(ArrayList<Essay>) context.getAttribute("all_essays");
+            essays=(Essay[]) context.getAttribute("all_essays");
         }
-        for(int i=0;i<essays.size();i++){
-            if(essays.get(i).getId().equals(Integer.valueOf(request.getParameter("id")))){
-                request.setAttribute("current_essay",essays.get(i));
+        for(int i=0;i<essays.length;i++){
+            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("id")))){
+                request.setAttribute("current_essay",essays[i]);
             }
         }
         String commentContent=request.getParameter("comment");

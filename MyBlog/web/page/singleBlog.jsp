@@ -18,7 +18,7 @@
     <div>
       <div>
           <div>
-              <a href="/AllEssayServlet"><span class="glyphicon glyphicon-home">返回主页</span></a>
+              <a href="/AllEssayServlet"><span class="glyphicon glyphicon-home">返回首页</span></a>
           </div>
       </div>
         <!--文章基本信息-->
@@ -83,7 +83,7 @@
                             <h3 class="panel-title">${comment.username}</h3>
                             <span>${comment.creation_time}</span>
                             <a href="/StarComServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${comment.star}&nbsp;</span></a>
-                            <a href="/DisComServlet?id=${comment.id}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
+                            <a href="/DisComServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
                         </div>
                         <div class="panel-body">
                             ${comment.content}

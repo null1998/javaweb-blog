@@ -17,15 +17,15 @@ public class StarServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<Essay> essays=null;
+        Essay[]essays=null;
         Connection conn=(Connection) getServletContext().getAttribute("conn");
         synchronized (getServletContext()){
             ServletContext context=getServletContext();
-            essays=(ArrayList<Essay>) context.getAttribute("all_essays");
+            essays=(Essay[]) context.getAttribute("all_essays");
         }
-        for(int i=0;i<essays.size();i++){
-            if(essays.get(i).getId().equals(Integer.valueOf(request.getParameter("id")))){
-                Essay essay=new Utils().star(conn,Integer.valueOf(request.getParameter("id")),essays.get(i));
+        for(int i=0;i<essays.length;i++){
+            if(essays[i].getId().equals(Integer.valueOf(request.getParameter("id")))){
+                Essay essay=new Utils().star(conn,Integer.valueOf(request.getParameter("id")),essays[i]);
                 request.setAttribute("current_essay",essay);
             }
         }
