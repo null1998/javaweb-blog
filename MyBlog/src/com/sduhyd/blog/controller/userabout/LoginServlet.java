@@ -1,12 +1,11 @@
-package com.sduhyd.blog;
+package com.sduhyd.blog.controller.userabout;
 
-import com.sduhyd.blog.User;
-import com.sduhyd.blog.Utils;
+import com.sduhyd.blog.model.Utils;
+import com.sduhyd.blog.bean.User;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 
 public class LoginServlet extends HttpServlet {
@@ -33,7 +32,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("current_user", user);
             }
             System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
-            response.sendRedirect("/AllEssayServlet");
+            response.sendRedirect("/mainpage");
         }else {
             System.out.println("登录失败！");
         }

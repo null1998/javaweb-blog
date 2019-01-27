@@ -1,12 +1,8 @@
-package com.sduhyd.blog;
-
-import com.sduhyd.blog.ConnctionDB;
+package com.sduhyd.blog.others;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 
 public class ApplicationListener implements ServletContextListener {

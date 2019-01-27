@@ -1,14 +1,17 @@
-package com.sduhyd.blog;
+package com.sduhyd.blog.model;
 
-import com.mysql.jdbc.Connection.*;
-import net.sf.json.JSONArray;
+
+
+import com.sduhyd.blog.bean.Comment;
+import com.sduhyd.blog.bean.Essay;
+import com.sduhyd.blog.bean.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Utils {
-    public  User register(Connection conn,String username,String password){
+    public User register(Connection conn, String username, String password){
         try {
             //检查注册用户名与昵称是否重复
             String sql_check = "select username from BLOG_TB_USER where username = ?";
@@ -107,7 +110,7 @@ public class Utils {
 
             return false;
     }
-    public  Essay[] showEssay(Connection conn,Integer user_id){
+    public  Essay[] showEssay(Connection conn, Integer user_id){
 
         try {
             //统计用户的文章数
@@ -302,7 +305,7 @@ public class Utils {
             e.printStackTrace();
         }
     }
-    public Comment[] getComments(Connection conn,int essay_id){
+    public Comment[] getComments(Connection conn, int essay_id){
         Comment[]comments=null;
         try{
             String sql="select count(*) from BLOG_TB_COMMENT where essay_id=?";

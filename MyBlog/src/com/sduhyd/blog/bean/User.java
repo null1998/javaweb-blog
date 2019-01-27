@@ -1,4 +1,4 @@
-package com.sduhyd.blog;
+package com.sduhyd.blog.bean;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;

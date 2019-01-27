@@ -1,4 +1,7 @@
-package com.sduhyd.blog;
+package com.sduhyd.blog.model;
+
+import com.sduhyd.blog.bean.Comment;
+import com.sduhyd.blog.bean.Essay;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.sduhyd.blog;
+package com.sduhyd.blog.others;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;

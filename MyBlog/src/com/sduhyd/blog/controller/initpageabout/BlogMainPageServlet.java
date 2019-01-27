@@ -1,11 +1,11 @@
-package com.sduhyd.blog;
+package com.sduhyd.blog.controller.initpageabout;
 
-import com.sduhyd.blog.Essay;
-import com.sduhyd.blog.Utils;
+import com.sduhyd.blog.bean.Essay;
+import com.sduhyd.blog.model.SortUtils;
+import com.sduhyd.blog.model.Utils;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 
-public class AllEssayServlet extends HttpServlet {
+public class BlogMainPageServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
