@@ -1,7 +1,7 @@
-<%@ page import="com.sduhyd.blog.Essay" %>
+<%@ page import="com.sduhyd.blog.bean.Essay" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.text.DateFormat" %>
-<%@ page import="com.sduhyd.blog.User" %><%--
+<%@ page import="com.sduhyd.blog.bean.User" %><%--
   Created by IntelliJ IDEA.
   User: test
   Date: 2018/8/20

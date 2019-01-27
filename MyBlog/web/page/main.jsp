@@ -1,5 +1,5 @@
-<%@ page import="com.sduhyd.blog.Utils" %>
-<%@ page import="com.sduhyd.blog.User" %>
+<%@ page import="com.sduhyd.blog.model.Utils" %>
+<%@ page import="com.sduhyd.blog.bean.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--port9191-->
@@ -13,8 +13,8 @@
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1>我的第一个博客页面</h1>
-    <p>good good study,day day up!</p>
+    <h1>主页</h1>
+    <p></p>
 </div>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -80,7 +80,7 @@
             <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
                 <c:forEach var="top_essay" items="${applicationScope.top_essays}">
-                    <li><a href="/SingleEssayServlet?id=${top_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
+                    <li><a href="/essaypage?essay_id=${top_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
                 </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -101,7 +101,7 @@
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>
-                    <a href="/SingleEssayServlet?essay_id=${essay.id}">阅读全文</a>
+                    <a href="/essaypage?essay_id=${essay.id}">阅读全文</a>
                     <br/>
                 </div>
                 </c:forEach>

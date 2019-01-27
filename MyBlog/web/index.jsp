@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-   <jsp:forward page="/AllEssayServlet" />
+   <jsp:forward page="/mainpage" />
 </body>
 </html>

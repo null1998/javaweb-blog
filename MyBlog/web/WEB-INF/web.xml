@@ -8,17 +8,33 @@
         <param-value>localhost:3306/DB_BLOG</param-value>
     </context-param>
     <listener>
-        <listener-class>com.sduhyd.blog.ApplicationListener</listener-class>
+        <listener-class>com.sduhyd.blog.others.ApplicationListener</listener-class>
     </listener>
     <listener>
-        <listener-class>com.sduhyd.blog.SessionListener</listener-class>
+        <listener-class>com.sduhyd.blog.others.SessionListener</listener-class>
     </listener>
     <session-config>
         <session-timeout>15</session-timeout>
     </session-config>
     <servlet>
+        <servlet-name>BlogMainPageServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.initpageabout.BlogMainPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BlogMainPageServlet</servlet-name>
+        <url-pattern>/mainpage</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EssaySinglePageServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.initpageabout.EssaySinglePageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EssaySinglePageServlet</servlet-name>
+        <url-pattern>/essaypage</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.LoginServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.userabout.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -27,7 +43,7 @@
 
     <servlet>
         <servlet-name>LogOutServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.LogOutServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.userabout.LogOutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogOutServlet</servlet-name>
@@ -35,7 +51,7 @@
     </servlet-mapping>
    <servlet>
        <servlet-name>CreateEssayServlet</servlet-name>
-       <servlet-class>com.sduhyd.blog.CreateEssayServlet</servlet-class>
+       <servlet-class>com.sduhyd.blog.controller.userabout.CreateEssayServlet</servlet-class>
    </servlet>
     <servlet-mapping>
         <servlet-name>CreateEssayServlet</servlet-name>
@@ -43,7 +59,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ShowEssayServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.ShowEssayServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.userabout.ShowEssayServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShowEssayServlet</servlet-name>
@@ -51,7 +67,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.RegisterServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.userabout.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -59,39 +75,15 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UpdateEssayServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.UpdateEssayServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.userabout.UpdateEssayServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateEssayServlet</servlet-name>
         <url-pattern>/UpdateEssayServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>AllEssayServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.AllEssayServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AllEssayServlet</servlet-name>
-        <url-pattern>/AllEssayServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>SingleEssayServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.SingleEssayServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SingleEssayServlet</servlet-name>
-        <url-pattern>/SingleEssayServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>ToRigisterServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.ToRigisterServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ToRigisterServlet</servlet-name>
-        <url-pattern>/ToRigisterServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>StarServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.StarServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.essayabout.StarServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>StarServlet</servlet-name>
@@ -99,7 +91,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>DisServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.DisServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.essayabout.DisServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DisServlet</servlet-name>
@@ -107,7 +99,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>CommentServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.CommentServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.essayabout.CommentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CommentServlet</servlet-name>
@@ -115,7 +107,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>StarComServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.StarComServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.commentabout.StarComServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>StarComServlet</servlet-name>
@@ -123,7 +115,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>DisComServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.DisComServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.commentabout.DisComServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DisComServlet</servlet-name>
