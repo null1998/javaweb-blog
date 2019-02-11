@@ -12,6 +12,7 @@ public class Essay {
     private Integer diss;
     private Integer comments;
     private Integer visitor;
+    private Integer favorite;
 
     public Integer getId() {
         return id;
@@ -99,5 +100,13 @@ public class Essay {
 
     public void setVisitor(Integer visitor) {
         this.visitor = visitor;
+    }
+
+    public Integer getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Integer favorite) {
+        this.favorite = favorite;
     }
 }

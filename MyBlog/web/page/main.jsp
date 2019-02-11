@@ -31,7 +31,7 @@
                 <li class="active"><a href="main.jsp"><span class="glyphicon glyphicon-home"></span>首页</a></li>
             </ul>
             <c:choose>
-                <c:when test="${sessionScope.current_user==null}">
+                <c:when test="${sessionScope.current_user.id==0}">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="rigister.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
                         <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
@@ -45,7 +45,7 @@
                         <li><a href="#"> <span class="glyphicon glyphicon-cog"></span>设置</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-star"></span>收藏</a></li>
+                        <li><a href="/MyFavoriteServlet?current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-star"></span>收藏</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="writeEssay.jsp"><span class="glyphicon glyphicon-edit"></span>写文章</a></li>
@@ -58,29 +58,12 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
-            <h2>标题</h2>
-            <h5>副标题</h5>
-            <div class="fakeimg">一张图片</div>
-            <p>一些文本</p>
-            <p></p>
-            <h2>标题</h2>
-            <h5>副标题</h5>
-            <div></div>
-            <p>第一段</p>
-            <p>第二段</p>
-            <p>第三段</p>
-            <p></p>
         </div>
         <div class="col-sm-4">
-            <h2>关于我</h2>
-            <h5>我的照片:</h5>
-            <div class="fakeimg"></div>
-            <p>关于我的介绍..</p>
-            <h3>热门排行</h3>
             <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
                 <c:forEach var="top_essay" items="${applicationScope.top_essays}">
-                    <li><a href="/essaypage?essay_id=${top_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
+                    <li><a href="/essaypage?essay_id=${top_essay.id}&current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
                 </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -101,7 +84,7 @@
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>
-                    <a href="/essaypage?essay_id=${essay.id}">阅读全文</a>
+                    <a href="/essaypage?essay_id=${essay.id}&current_user_id=${sessionScope.current_user.id}">阅读全文</a>
                     <br/>
                 </div>
                 </c:forEach>

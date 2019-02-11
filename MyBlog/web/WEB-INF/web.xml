@@ -33,9 +33,25 @@
         <url-pattern>/essaypage</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>NullUserServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.initpageabout.NullUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NullUserServlet</servlet-name>
+        <url-pattern>/nulluserpage</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyFavoriteServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.userabout.MyFavoriteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyFavoriteServlet</servlet-name>
+        <url-pattern>/MyFavoriteServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -97,6 +113,15 @@
         <servlet-name>DisServlet</servlet-name>
         <url-pattern>/DisServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.essayabout.FavoriteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <url-pattern>/FavoriteServlet</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>CommentServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.essayabout.CommentServlet</servlet-class>

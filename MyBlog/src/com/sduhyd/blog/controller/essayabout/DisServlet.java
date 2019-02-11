@@ -1,5 +1,6 @@
 package com.sduhyd.blog.controller.essayabout;
 
+import com.sduhyd.blog.bean.User;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.Utils;
 import com.sduhyd.blog.bean.Comment;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -29,7 +31,9 @@ public class DisServlet extends HttpServlet {
         }
         for(int i=0;i<essays.length;i++){
             if(essays[i].getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
-                Essay essay=new Utils().diss(conn,Integer.valueOf(request.getParameter("essay_id")),essays[i]);
+                HttpSession session=request.getSession(false);;
+                User current_user=(User)session.getAttribute("current_user");
+                Essay essay=new Utils().diss(conn,Integer.valueOf(request.getParameter("essay_id")),current_user.getId(),essays[i]);
                 request.setAttribute("current_essay",essay);
             }
         }

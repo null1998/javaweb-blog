@@ -196,9 +196,10 @@ public class Utils {
                     essay.setDiss(rs.getInt("diss"));
                     essay.setComments(rs.getInt("comments"));
                     essay.setVisitor(rs.getInt("visitor"));
+                    essay.setFavorite(rs.getInt("favorite"));
                     arrayList.add(essay);
                 }
-                System.out.println("查看全部文章成功");
+
                 rs.close();
                 statement.close();
             }catch (SQLException e){
@@ -207,7 +208,7 @@ public class Utils {
 
             return arrayList;
     }
-    public Essay visitor(Connection conn, int essay_id,Essay essay){
+    public Essay visitor(Connection conn, int essay_id,int user_id,Essay essay){
 
         try{
             String sql="select visitor from BLOG_TB_ESSAY where id=?";
@@ -217,14 +218,26 @@ public class Utils {
             Integer visitor=null;
             while(rs.next()){
                  visitor=rs.getInt("visitor");
-                 visitor++;
-                 essay.setVisitor(visitor);
-                String sql1="update BLOG_TB_ESSAY set visitor=? where id=?";
-                PreparedStatement statement1=conn.prepareStatement(sql1);
-                statement1.setInt(1,visitor);
-                statement1.setInt(2,essay_id);
-                statement1.executeUpdate();
-                statement1.close();
+                 EssayIDManger eim=new EssayIDManger();
+
+                 //没访问过则更新两张表
+                 if(!eim.isVisitor(conn,essay_id,user_id)) {
+                     visitor++;
+                     String sql1 = "update BLOG_TB_ESSAY set visitor=? where id=?";
+                     PreparedStatement statement1 = conn.prepareStatement(sql1);
+                     statement1.setInt(1, visitor);
+                     statement1.setInt(2, essay_id);
+                     statement1.executeUpdate();
+                     String sql2="insert into BLOG_TB_VISITE(user_id,essay_id)values(?,?)";
+                     PreparedStatement statement2=conn.prepareStatement(sql2);
+                     statement2.setInt(1,user_id);
+                     statement2.setInt(2,essay_id);
+                     statement2.executeUpdate();
+                     statement1.close();
+                     statement2.close();
+                 }
+
+                essay.setVisitor(visitor);
             }
             rs.close();
             statement.close();
@@ -235,7 +248,7 @@ public class Utils {
         return essay;
 
     }
-    public Essay star(Connection conn, int essay_id,Essay essay){
+    public Essay star(Connection conn, int essay_id,int user_id,Essay essay){
         try{
             String sql="select star from BLOG_TB_ESSAY where id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
@@ -243,24 +256,34 @@ public class Utils {
             ResultSet rs=statement.executeQuery();
             while(rs.next()){
                 Integer star=rs.getInt("star");
-                star++;
+                EssayIDManger eim=new EssayIDManger();
+                if(!eim.isStar(conn,essay_id,user_id)) {
+                    star++;
+                    String sql1 = "update BLOG_TB_ESSAY set star=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, star);
+                    statement1.setInt(2, essay_id);
+                    statement1.executeUpdate();
+                    String sql2="insert into BLOG_TB_ESSAY_STAR(user_id,essay_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,essay_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }
                 essay.setStar(star);
-                String sql1="update BLOG_TB_ESSAY set star=? where id=?";
-            PreparedStatement statement1=conn.prepareStatement(sql1);
-            statement1.setInt(1,star);
-            statement1.setInt(2,essay_id);
-            statement1.executeUpdate();
-            statement1.close();
+
             }
             rs.close();
             statement.close();
-           return essay;
+
         }catch(SQLException e){
             e.printStackTrace();
         }
                return essay;
     }
-    public Essay diss(Connection conn, int essay_id,Essay essay){
+    public Essay diss(Connection conn, int essay_id,int user_id,Essay essay){
         try{
             String sql="select diss from BLOG_TB_ESSAY where id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
@@ -269,15 +292,24 @@ public class Utils {
             Integer diss=0;
             while(rs.next()) {
                 diss = rs.getInt("diss");
-                diss++;
+                EssayIDManger eim=new EssayIDManger();
+                if(!eim.isDiss(conn,essay_id,user_id)) {
+                    diss++;
+                    String sql1 = "update BLOG_TB_ESSAY set diss=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, diss);
+                    statement1.setInt(2, essay_id);
+                    statement1.executeUpdate();
+                    String sql2="insert into BLOG_TB_ESSAY_DISS(user_id,essay_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,essay_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }
                 essay.setDiss(diss);
-                String sql1 = "update BLOG_TB_ESSAY set diss=? where id=?";
-                PreparedStatement statement1 = conn.prepareStatement(sql1);
-                statement1.setInt(1, diss);
-                statement1.setInt(2, essay_id);
-                statement1.executeUpdate();
-                statement1.close();
-                return essay;
+
             }
             rs.close();
             statement.close();
@@ -373,7 +405,7 @@ public class Utils {
         }
            return essay;
     }
-    public void starCom(Connection conn,Integer comment_id){
+    public void starCom(Connection conn,Integer comment_id,Integer user_id){
         try{
             String sql="select star from BLOG_TB_COMMENT where id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
@@ -381,14 +413,23 @@ public class Utils {
             ResultSet rs=statement.executeQuery();
             Integer star=0;
             while(rs.next()){
-                star=rs.getInt("star");
-                star++;
-                String sql1="update BLOG_TB_COMMENT set star=? where id=?";
-                PreparedStatement statement1=conn.prepareStatement(sql1);
-                statement1.setInt(1,star);
-                statement1.setInt(2,comment_id);
-                statement1.executeUpdate();
-                statement1.close();
+                CommentIDManger cim=new CommentIDManger();
+                if(!cim.isStar(conn,user_id,comment_id)) {
+                    star=rs.getInt("star");
+                    star++;
+                    String sql1 = "update BLOG_TB_COMMENT set star=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, star);
+                    statement1.setInt(2, comment_id);
+                    statement1.executeUpdate();
+                    String sql2="insert into BLOG_TB_COMMENT_STAR(user_id,comment_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,comment_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }
             }
             rs.close();
             statement.close();
@@ -396,7 +437,7 @@ public class Utils {
             e.printStackTrace();
         }
     }
-    public void disCom(Connection conn,Integer comment_id){
+    public void disCom(Connection conn,Integer comment_id,Integer user_id){
         try{
             String sql="select diss from BLOG_TB_COMMENT where id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
@@ -404,14 +445,23 @@ public class Utils {
             ResultSet rs=statement.executeQuery();
             Integer diss=0;
             while(rs.next()){
-                diss=rs.getInt("diss");
-                diss++;
-                String sql1="update BLOG_TB_COMMENT set diss=? where id=?";
-                PreparedStatement statement1=conn.prepareStatement(sql1);
-                statement1.setInt(1,diss);
-                statement1.setInt(2,comment_id);
-                statement1.executeUpdate();
-                statement1.close();
+                CommentIDManger cim=new CommentIDManger();
+                if(!cim.isDiss(conn,user_id,comment_id)) {
+                    diss = rs.getInt("diss");
+                    diss++;
+                    String sql1 = "update BLOG_TB_COMMENT set diss=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, diss);
+                    statement1.setInt(2, comment_id);
+                    statement1.executeUpdate();
+                    String sql2="insert into BLOG_TB_COMMENT_DISS(user_id,comment_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,comment_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }
             }
             rs.close();
             statement.close();

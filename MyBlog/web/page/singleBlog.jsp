@@ -47,7 +47,8 @@
         <!--点赞-->
         <div>
             <a href="/StarServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${requestScope.current_essay.star}&nbsp;</span></a>
-            <a href="/DisServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}</span></a>
+            <a href="/DisServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}&nbsp;</span></a>
+            <a href="/FavoriteServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-heart-empty">${requestScope.current_essay.favorite}&nbsp;</span></a>
         </div>
         <!-- 评论 -->
         <div>
