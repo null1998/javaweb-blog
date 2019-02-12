@@ -271,6 +271,20 @@ public class Utils {
                     statement2.executeUpdate();
                     statement1.close();
                     statement2.close();
+                }else if(user_id!=0){
+                    star--;
+                    String sql1 = "update BLOG_TB_ESSAY set star=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, star);
+                    statement1.setInt(2, essay_id);
+                    statement1.executeUpdate();
+                    String sql2="delete from BLOG_TB_ESSAY_STAR where user_id=? and essay_id=?";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,essay_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
                 }
                 essay.setStar(star);
 
@@ -301,6 +315,20 @@ public class Utils {
                     statement1.setInt(2, essay_id);
                     statement1.executeUpdate();
                     String sql2="insert into BLOG_TB_ESSAY_DISS(user_id,essay_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,essay_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }else if(user_id!=0){
+                    diss--;
+                    String sql1 = "update BLOG_TB_ESSAY set diss=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, diss);
+                    statement1.setInt(2, essay_id);
+                    statement1.executeUpdate();
+                    String sql2="delete from BLOG_TB_ESSAY_DISS where user_id=? and essay_id=?";
                     PreparedStatement statement2=conn.prepareStatement(sql2);
                     statement2.setInt(1,user_id);
                     statement2.setInt(2,essay_id);

@@ -31,6 +31,20 @@ public class EssayOP {
                     statement2.executeUpdate();
                     statement1.close();
                     statement2.close();
+                }else if(user_id!=0){
+                    favorite--;
+                    String sql1 = "update BLOG_TB_ESSAY set favorite=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, favorite);
+                    statement1.setInt(2, essay_id);
+                    statement1.executeUpdate();
+                    String sql2="delete from BLOG_TB_ESSAY_FAVORITE where user_id=? and essay_id=?";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,essay_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
                 }
                 essay.setFavorite(favorite);
 
@@ -43,17 +57,6 @@ public class EssayOP {
         }
         return essay;
     }
-    void favorite1(Connection conn,int user_id,int essay_id){
-        try{
-            String sql2="insert into BLOG_TB_ESSAY_FAVORITE(user_id,essay_id)values(?,?)";
-            PreparedStatement statement2=conn.prepareStatement(sql2);
-            statement2.setInt(1,user_id);
-            statement2.setInt(2,essay_id);
-            statement2.executeUpdate();
-            statement2.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
+
 
 }
