@@ -52,6 +52,14 @@
         <servlet-name>MyFavoriteServlet</servlet-name>
         <url-pattern>/MyFavoriteServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteMyFavoriteServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.userabout.DeleteMyFavoriteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteMyFavoriteServlet</servlet-name>
+        <url-pattern>/DeleteMyFavoriteServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
