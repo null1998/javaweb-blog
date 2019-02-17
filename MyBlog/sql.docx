@@ -1,0 +1,54 @@
+
+
+create table BLOG_TB_USER(id int not null auto_increment,
+username char(10) not null,
+password char(10) not null,
+primary key(id)
+);
+create table BLOG_TB_ESSAY(id int not null auto_increment,user_id int not null,
+username char(10) not null,
+creation_time datetime not null,
+modify_time datetime not null,
+title char(50) not null,
+article text not null,
+star int not null,
+diss int not null,
+comments int not null,
+visitor int not null,
+primary key(id)
+);
+create table BLOG_TB_COMMENT(id int not null auto_increment,user_id int not null,
+essay_id int not null,
+star int not null,
+diss int not null,
+username char(10) not null,
+content text not null,
+creation_time datetime not null,
+primary key(id)
+);
+drop table tablename;
+delete from tablename where;
+create table BLOG_TB_VISITE(id int not null auto_increment,user_id int not null,
+essay_id int not null,
+primary key(id)
+);
+create table BLOG_TB_ESSAY_STAR(id int not null auto_increment,user_id int not null,
+essay_id int not null,
+primary key(id)
+);
+create table BLOG_TB_ESSAY_DISS(id int not null auto_increment,user_id int not null,
+essay_id int not null,
+primary key(id)
+);
+create table BLOG_TB_COMMENT_STAR(id int not null auto_increment,user_id int not null,
+comment_id int not null,
+primary key(id)
+);
+create table BLOG_TB_COMMENT_DISS(id int not null auto_increment,user_id int not null,
+comment_id int not null,
+primary key(id)
+);
+create table BLOG_TB_ESSAY_FAVORITE(id int not null auto_increment,user_id int not null,
+essay_id int not null,
+primary key(id)
+);
