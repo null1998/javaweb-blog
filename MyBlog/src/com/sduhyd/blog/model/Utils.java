@@ -88,7 +88,7 @@ public class Utils {
 
         java.sql.Date sql_date = new java.sql.Date(modify_time.getTime());
         try{
-                String create_sql="insert into BLOG_TB_ESSAY(user_id,title,article,creation_time,modify_time,username,star,diss,comments,visitor)values(?,?,?,?,?,?,?,?,?,?) ";
+                String create_sql="insert into BLOG_TB_ESSAY(user_id,title,article,creation_time,modify_time,username,star,diss,comments,visitor,favorite)values(?,?,?,?,?,?,?,?,?,?,?) ";
                 PreparedStatement statement = conn.prepareStatement(create_sql);
                 statement.setInt(1, user_id);
                 statement.setString(2, title);
@@ -101,6 +101,7 @@ public class Utils {
                 statement.setInt(8, 0);
                 statement.setInt(9, 0);
                 statement.setInt(10, 0);
+                statement.setInt(11,0);
                 statement.executeUpdate();
                 System.out.println(username+"新增了博客");
                 return true;
@@ -439,11 +440,10 @@ public class Utils {
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setInt(1,comment_id);
             ResultSet rs=statement.executeQuery();
-            Integer star=0;
             while(rs.next()){
+                Integer star=rs.getInt("star");
                 CommentIDManger cim=new CommentIDManger();
                 if(!cim.isStar(conn,user_id,comment_id)) {
-                    star=rs.getInt("star");
                     star++;
                     String sql1 = "update BLOG_TB_COMMENT set star=? where id=?";
                     PreparedStatement statement1 = conn.prepareStatement(sql1);
@@ -451,6 +451,20 @@ public class Utils {
                     statement1.setInt(2, comment_id);
                     statement1.executeUpdate();
                     String sql2="insert into BLOG_TB_COMMENT_STAR(user_id,comment_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,comment_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }else if(user_id!=0){
+                    star--;
+                    String sql1 = "update BLOG_TB_COMMENT set star=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, star);
+                    statement1.setInt(2, comment_id);
+                    statement1.executeUpdate();
+                    String sql2="delete from BLOG_TB_COMMENT_STAR where user_id=? and comment_id=?";
                     PreparedStatement statement2=conn.prepareStatement(sql2);
                     statement2.setInt(1,user_id);
                     statement2.setInt(2,comment_id);
@@ -471,11 +485,10 @@ public class Utils {
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setInt(1,comment_id);
             ResultSet rs=statement.executeQuery();
-            Integer diss=0;
             while(rs.next()){
+                Integer  diss = rs.getInt("diss");
                 CommentIDManger cim=new CommentIDManger();
                 if(!cim.isDiss(conn,user_id,comment_id)) {
-                    diss = rs.getInt("diss");
                     diss++;
                     String sql1 = "update BLOG_TB_COMMENT set diss=? where id=?";
                     PreparedStatement statement1 = conn.prepareStatement(sql1);
@@ -483,6 +496,20 @@ public class Utils {
                     statement1.setInt(2, comment_id);
                     statement1.executeUpdate();
                     String sql2="insert into BLOG_TB_COMMENT_DISS(user_id,comment_id)values(?,?)";
+                    PreparedStatement statement2=conn.prepareStatement(sql2);
+                    statement2.setInt(1,user_id);
+                    statement2.setInt(2,comment_id);
+                    statement2.executeUpdate();
+                    statement1.close();
+                    statement2.close();
+                }else if(user_id!=0){
+                    diss--;
+                    String sql1 = "update BLOG_TB_COMMENT set diss=? where id=?";
+                    PreparedStatement statement1 = conn.prepareStatement(sql1);
+                    statement1.setInt(1, diss);
+                    statement1.setInt(2, comment_id);
+                    statement1.executeUpdate();
+                    String sql2="delete from BLOG_TB_COMMENT_DISS where user_id=? and comment_id=?";
                     PreparedStatement statement2=conn.prepareStatement(sql2);
                     statement2.setInt(1,user_id);
                     statement2.setInt(2,comment_id);
