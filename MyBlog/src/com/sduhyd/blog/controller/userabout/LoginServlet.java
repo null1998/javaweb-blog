@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
             response.sendRedirect("/mainpage");
         }else {
-            System.out.println("登录失败！");
+            response.sendRedirect("/page/errorPage1.jsp");
         }
 
     }
