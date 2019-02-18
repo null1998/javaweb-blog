@@ -54,7 +54,7 @@
         <div>
             <div>
                 <c:choose>
-                    <c:when test="${sessionScope.current_user!=null}">
+                    <c:when test="${sessionScope.current_user.id!=0}">
                         <span class="glyphicon glyphicon-edit">写评论</span>
                         <br>
                         <!--隐藏input，好东西-->
