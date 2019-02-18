@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-  已有相同用户名！
+  错误操作！
 </body>
 </html>
