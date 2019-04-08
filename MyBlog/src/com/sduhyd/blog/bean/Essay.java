@@ -109,4 +109,19 @@ public class Essay {
     public void setFavorite(Integer favorite) {
         this.favorite = favorite;
     }
+
+    public void initEssay(Integer id,Integer user_id,String username,String title,String article,Date creation_time,Date modify_time,Integer star,Integer diss,Integer comments,Integer visitor,Integer favorite){
+        setId(id);
+        setUser_id(user_id);
+        setUsername(username);
+        setTitle(title);
+        setArticle(article);
+        setCreation_time(creation_time);
+        setModify_time(modify_time);
+        setStar(star);
+        setDiss(diss);
+        setComments(comments);
+        setVisitor(visitor);
+        setFavorite(favorite);
+    }
 }

@@ -75,4 +75,14 @@ public class Comment {
     public void setContent(String content) {
         this.content = content;
     }
+    public void initComment(Integer id,String username,Integer user_id,Integer essay_id,Integer star,Integer diss,String content,Date creation_time){
+        setId(id);
+        setUsername(username);
+        setUser_id(user_id);
+        setEssay_id(essay_id);
+        setStar(star);
+        setDiss(diss);
+        setContent(content);
+        setCreation_time(creation_time);
+    }
 }

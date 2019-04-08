@@ -31,6 +31,12 @@ public class User implements HttpSessionBindingListener{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void initUser(Integer id,String username,String password){
+        setId(id);
+        setUsername(username);
+        setPassword(password);
+    }
     @Override
     public void valueBound(HttpSessionBindingEvent event){
         HttpSession session=event.getSession();
