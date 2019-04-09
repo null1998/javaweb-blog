@@ -1,6 +1,7 @@
 package com.sduhyd.blog.controller.userabout;
 
 import com.sduhyd.blog.bean.User;
+import com.sduhyd.blog.controller.BlogDataServlet;
 import com.sduhyd.blog.model.UserOP;
 
 import javax.servlet.ServletContext;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.sql.Connection;
 
 @WebServlet(name = "DeleteMyFavoriteServlet")
-public class DeleteMyFavoriteServlet extends HttpServlet {
+public class DeleteMyFavoriteServlet extends BlogDataServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
              doGet(request,response);
     }
@@ -22,9 +23,9 @@ public class DeleteMyFavoriteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        ServletContext context = request.getServletContext();
-        Connection conn=(Connection) context.getAttribute("conn");
-        new UserOP().deleteMyFavorite(conn,Integer.valueOf(request.getParameter("user_id")),Integer.valueOf(request.getParameter("essay_id")));
+        loadContextData(request,response);
+        loadSessionData(request,response);
+        new UserOP().deleteMyFavorite(conn,current_user.getId(),Integer.valueOf(request.getParameter("essay_id")));
         response.sendRedirect("/MyFavoriteServlet");
     }
 }

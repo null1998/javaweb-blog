@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-
+//暂时没用
 public class UpdateEssayServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {

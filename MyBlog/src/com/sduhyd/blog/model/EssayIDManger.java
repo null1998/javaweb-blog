@@ -7,7 +7,7 @@ import java.util.ArrayList;
 //每个ID对每个文章的部分操作是有次数限制的。
 public class EssayIDManger extends UserIDLimit{
     boolean isVisitor(Connection conn, int essay_id,int user_id){
-        String sql = "select  user_id from BLOG_TB_VISITE where essay_id=?";
+        String sql = "select  user_id from BLOG_TB_ESSAY_VISITOR where essay_id=?";
         return isOperate(conn,essay_id,user_id,sql);
     }
     boolean isStar(Connection conn, int essay_id,int user_id){

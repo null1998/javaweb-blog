@@ -1,5 +1,6 @@
 package com.sduhyd.blog.controller.userabout;
 
+import com.sduhyd.blog.controller.BlogDataServlet;
 import com.sduhyd.blog.model.Utils;
 import com.sduhyd.blog.bean.User;
 
@@ -18,21 +19,19 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         Connection conn=(Connection) getServletContext().getAttribute("conn");
         User user=new Utils().login(conn,username,password);
         Cookie cookie=new Cookie("username",username);
         cookie.setMaxAge(60*60*24);
-        if(user != null){
+        if(user != null){//
             response.addCookie(cookie);
             synchronized (request.getSession(false)){
                 HttpSession session = request.getSession(false);
                 session.setAttribute("current_user", user);
             }
-            System.out.println("用户 "+user.getUsername()+" "+" 登陆成功！");
-            response.sendRedirect("/mainpage");
+            response.sendRedirect("/InitServlet");
         }else {
             response.sendRedirect("/page/errorPage1.jsp");
         }

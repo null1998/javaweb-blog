@@ -1,6 +1,7 @@
 package com.sduhyd.blog.controller;
 
 import com.sduhyd.blog.bean.Essay;
+import com.sduhyd.blog.bean.User;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.Utils;
 
@@ -10,15 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+//帮助载入context数据的类和整个项目需要的session数据,同时作为EssayPageDataServlet和其它一些Servlet的基类
 @WebServlet(name = "BlogDataServlet")
 public class BlogDataServlet extends HttpServlet {
+    protected Connection conn;
     protected Essay[]essays=null;
     protected Essay[]top_essays=null;
-    protected Connection conn;
+    protected User current_user;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -33,5 +37,9 @@ public class BlogDataServlet extends HttpServlet {
             essays=(Essay[]) context.getAttribute("all_essays");
             top_essays=(Essay[]) context.getAttribute("top_essays");
         }
+    }
+    protected void loadSessionData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        HttpSession session=request.getSession(false);;
+        current_user=(User)session.getAttribute("current_user");
     }
 }

@@ -17,6 +17,14 @@
         <session-timeout>15</session-timeout>
     </session-config>
     <servlet>
+        <servlet-name>InitServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.initpageabout.InitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InitServlet</servlet-name>
+        <url-pattern>/InitServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>BlogMainPageServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.initpageabout.BlogMainPageServlet</servlet-class>
     </servlet>

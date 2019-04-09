@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class CommentIDManger extends UserIDLimit{
     SQL_JDBC sql_jdbc=new SQL_JDBC();
-    boolean isStar(Connection conn,int user_id,int comment_id){
+    boolean isStar(Connection conn,int comment_id,int user_id){
         String sql = "select  user_id from BLOG_TB_COMMENT_STAR where comment_id=?";
         return isOperate(conn,comment_id,user_id,sql);
     }
-    boolean isDiss(Connection conn,int user_id,int comment_id){
+    boolean isDiss(Connection conn,int comment_id,int user_id){
         String sql = "select  user_id from BLOG_TB_COMMENT_DISS where comment_id=?";
         return isOperate(conn,comment_id,user_id,sql);
     }

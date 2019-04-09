@@ -313,6 +313,7 @@ public class Utils {
         }
         try{
             String sql2="select *from BLOG_TB_COMMENT where essay_id=?";
+            list.add(essay_id);
             rs=sql_jdbc.prepareStatement("QUERY",conn,sql2,list);
             comments=new Comment[commentsCount];
             int tmp=0;
@@ -328,6 +329,7 @@ public class Utils {
         }
         return comments;
     }
+    //将该文章的comment加一并返回该文章
     public Essay comments(Connection conn, int essay_id,Essay essay){
         ArrayList list=new ArrayList();
         Integer commentsCount =getCommentsCount(conn,essay_id);
@@ -339,16 +341,16 @@ public class Utils {
         sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
         return essay;
     }
-    public void evaluateCom(Connection conn,Integer comment_id,Integer user_id,String evaluateCom) {
+    public Essay evaluateCom(Connection conn,Integer comment_id,Integer user_id,Essay essay,String evaluateCom) {
         ResultSet rs = null;
         boolean isOperate = true;
         ArrayList list = new ArrayList();
         Integer evaluateComCount = null;
         CommentIDManger cim = new CommentIDManger();
-        if (evaluateCom.equals("star")) {
+        if (evaluateCom.equals("starCom")) {
             isOperate = cim.isStar(conn, comment_id, user_id);
             evaluateComCount = getStarComCount(conn, comment_id);
-        } else if (evaluateCom.equals("diss")) {
+        } else if (evaluateCom.equals("dissCom")) {
             isOperate = cim.isDiss(conn, comment_id, user_id);
             evaluateComCount = getDissComCount(conn, comment_id);
         }
@@ -359,12 +361,18 @@ public class Utils {
             evaluateComCount--;
             updateEvaluateComCountDown(conn,comment_id,user_id,evaluateComCount,evaluateCom);
         }
+        if(evaluateCom.equals("starCom")){
+            essay.setStar(evaluateComCount);
+        }else if(evaluateCom.equals("dissCom")){
+            essay.setDiss(evaluateComCount);
+        }
+        return essay;
     }
-    public void starCom(Connection conn,Integer comment_id,Integer user_id){
-        evaluateCom(conn,comment_id,user_id,"star");
+    public Essay starCom(Connection conn,Integer comment_id,Integer user_id,Essay essay){
+        return evaluateCom(conn,comment_id,user_id,essay,"starCom");
     }
-    public void disCom(Connection conn,Integer comment_id,Integer user_id){
-        evaluateCom(conn,comment_id,user_id,"diss");
+    public Essay disCom(Connection conn,Integer comment_id,Integer user_id,Essay essay){
+        return evaluateCom(conn,comment_id,user_id,essay,"dissCom");
     }
 }
 

@@ -19,7 +19,7 @@
     <div>
       <div>
           <div>
-              <a href="/mainpage"><span class="glyphicon glyphicon-home">返回首页</span></a>
+              <a href="/InitServlet"><span class="glyphicon glyphicon-home">返回首页</span></a>
           </div>
       </div>
         <!--文章基本信息-->

@@ -2,6 +2,7 @@ package com.sduhyd.blog.controller.userabout;
 
 import com.sduhyd.blog.bean.Essay;
 import com.sduhyd.blog.bean.User;
+import com.sduhyd.blog.controller.BlogDataServlet;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.UserOP;
 
@@ -17,7 +18,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 @WebServlet(name = "MyFavoriteServlet")
-public class MyFavoriteServlet extends HttpServlet {
+public class MyFavoriteServlet extends BlogDataServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
            doGet(request,response);
     }
@@ -25,10 +26,8 @@ public class MyFavoriteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        ServletContext context = request.getServletContext();
-        Connection conn=(Connection) context.getAttribute("conn");
-        HttpSession session=request.getSession(false);;
-        User current_user=(User)session.getAttribute("current_user");
+        loadContextData(request,response);
+        loadSessionData(request,response);
         ArrayList<Essay> arrayList=new UserOP().myFavorite(conn,current_user.getId());
         if (!arrayList.isEmpty()) {
             Essay[] myfavorite_essays=new SortUtils().reverseEssay(arrayList);

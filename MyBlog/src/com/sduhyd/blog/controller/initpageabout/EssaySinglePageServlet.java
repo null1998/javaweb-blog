@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-
+//在点开一篇博客前，对于其中的数据进行初始化
 public class EssaySinglePageServlet extends BlogDataServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
              doGet(request,response);

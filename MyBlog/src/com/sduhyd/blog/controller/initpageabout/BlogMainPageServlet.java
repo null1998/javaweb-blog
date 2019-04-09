@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-
+//博客主页
 public class BlogMainPageServlet extends BlogDataServlet {
     @Override
     public void init() throws ServletException {
