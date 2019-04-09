@@ -2,6 +2,7 @@ package com.sduhyd.blog.controller.initpageabout;
 
 import com.sduhyd.blog.bean.Essay;
 import com.sduhyd.blog.bean.User;
+import com.sduhyd.blog.controller.BlogDataServlet;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.Utils;
 
@@ -16,27 +17,15 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 
-public class BlogMainPageServlet extends HttpServlet {
+public class BlogMainPageServlet extends BlogDataServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        ServletContext  context = request.getServletContext();
-        Connection conn=(Connection) context.getAttribute("conn");
-        ArrayList<Essay> arrayList = new Utils().allEssay(conn);
-        if (!arrayList.isEmpty()) {
-            Essay[]all_essays=new SortUtils().reverseEssay(arrayList);
-            Essay[]top_essays=new SortUtils().sortEssay(arrayList);
-            synchronized (request.getServletContext()){
-                context.setAttribute("all_essays",all_essays);
-                context.setAttribute("top_essays",top_essays);
-            }
-        }
-
+        loadContextData(request,response);
         response.sendRedirect(request.getContextPath()+"/page/main.jsp");
     }
     @Override

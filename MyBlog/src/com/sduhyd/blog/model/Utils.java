@@ -140,95 +140,148 @@ public class Utils {
             }
             return essayArrayList;
     }
-    public Essay visitor(Connection conn, int essay_id,int user_id,Essay essay){
+    //此函数用于得出visitor,star,diss,favorite,comments,starCom,dissCom的值
+    public Integer getNum(Connection conn,int target_id,String TYPE){
         ResultSet rs=null;
+        String sql="";
         ArrayList list=new ArrayList();
-        String sql_visitor="select visitor from BLOG_TB_ESSAY where id=?";
-        list.add(essay_id);
-        rs=sql_jdbc.prepareStatement("QUERY",conn,sql_visitor,list);
-        try{
+        if(TYPE.equals("visitor")||TYPE.equals("star")||TYPE.equals("diss")||TYPE.equals("favorite")||TYPE.equals("comments")){
+            sql="select "+TYPE+" from BLOG_TB_ESSAY where id=?";
+        }else if(TYPE.equals("starCom")){
+            sql="select star from BLOG_TB_COMMENT where id=?";
+        }else if(TYPE.equals("dissCom")){
+            sql="select diss from BLOG_TB_COMMENT where id=?";
+        }
+        list.add(target_id);
+        rs=sql_jdbc.prepareStatement("QUERY",conn,sql,list);
+        try {
             while(rs.next()){
-                Integer visitor=rs.getInt("visitor");
-                EssayIDManger eim=new EssayIDManger();
-                 //如果此用户id没有访问过此essay_id，则更新两张表，两者以此建立联系
-                 if(!eim.isVisitor(conn,essay_id,user_id)) {
-                     visitor++;
-                     String sql1 = "update BLOG_TB_ESSAY set visitor=? where id=?";
-                     list.clear();
-                     list.add(visitor);
-                     list.add(essay_id);
-                     sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
-                     String sql2="insert into BLOG_TB_VISITE(user_id,essay_id)values(?,?)";
-                     list.clear();
-                     list.add(user_id);
-                     list.add(essay_id);
-                     sql_jdbc.prepareStatement("UPDATE",conn,sql2,list);
-                 }
-                 essay.setVisitor(visitor);
+                return rs.getInt(1);
             }
-            rs.close();
-            return essay;
-        }catch(SQLException e){
+
+        }catch (SQLException e){
             e.printStackTrace();
         }
-        return essay;
+        return -1;
+    }
+    public Integer getVisitorCount(Connection conn,int essay_id){
+        return getNum(conn,essay_id,"visitor");
+    }
+    public Integer getStarCount(Connection conn,int essay_id){
+        return getNum(conn,essay_id,"star");
+    }
+    public Integer getDissCount(Connection conn,int essay_id){
+        return getNum(conn,essay_id,"diss");
+    }
+    public Integer getFavoriteCount(Connection conn,int essay_id){
+        return getNum(conn,essay_id,"favorite");
+    }
+    public Integer getCommentsCount(Connection conn,int essay_id){
+        return getNum(conn,essay_id,"comments");
+    }
 
+    public Integer getStarComCount(Connection conn,int comment_id){
+        return getNum(conn,comment_id,"starCom");
+    }
+    public Integer getDissComCount(Connection conn,int comment_id){
+        return getNum(conn,comment_id,"dissCom");
+    }
+    //此函数用于加一或减一
+    public void updateSum(Connection conn,int target_id,int user_id,int updateCount,String TYPE,String MODE){
+        ArrayList list=new ArrayList();
+        String sql1="";
+        String sql2="";
+        //暂时没有blog_tb_essay_comments
+        if(TYPE.equals("visitor")||TYPE.equals("star")||TYPE.equals("diss")||TYPE.equals("favorite")){
+            sql1="update BLOG_TB_ESSAY set "+TYPE+"=? where id=?";
+            if(MODE.equals("plus")){
+                sql2="insert into blog_tb_essay_"+TYPE+"(user_id,essay_id)values(?,?)";
+            }else if(MODE.equals("minus")){
+                sql2="delete from blog_tb_essay_"+TYPE+" where user_id=? and essay_id=?";
+            }
+        }else if(TYPE.equals("starCom")){
+            sql1="update BLOG_TB_COMMENT set star=? where id=?";
+            if(MODE.equals("plus")){
+                sql2="insert into blog_tb_comment_star(user_id,comment_id)values(?,?)";
+            }else if(MODE.equals("minus")){
+                sql2="delete from blog_tb_comment_star where user_id=? and comment_id=?";
+            }
+        }else if(TYPE.equals("dissCom")){
+            sql1="update BLOG_TB_COMMENT set diss=? where id=?";
+            if(MODE.equals("plus")){
+                sql2="insert into blog_tb_comment_diss(user_id,comment_id)values(?,?)";
+            }else if(MODE.equals("minus")){
+                sql2="delete from blog_tb_comment_diss where user_id=? and comment_id=?";
+            }
+        }
+        list.add(updateCount);
+        list.add(target_id);
+        sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
+        list.set(0,user_id);//替换完继续用。
+        sql_jdbc.prepareStatement("UPDATE",conn,sql2,list);
+    }
+    public void updateVisitorCountUp(Connection conn,int essay_id,int user_id,int updateCount){
+        updateSum(conn,essay_id,user_id,updateCount,"visitor","plus");
+    }
+    public void updateEvaluateCountUp(Connection conn,int essay_id,int user_id,int updateCount,String evaluate){
+        updateSum(conn,essay_id,user_id,updateCount,evaluate,"plus");
+    }
+    public void updateFavoriteCountUp(Connection conn,int essay_id,int user_id,int updateCount){
+        updateSum(conn,essay_id,user_id,updateCount,"favorite","plus");
+    }
+    public void updateEvaluateComCountUp(Connection conn,int comment_id,int user_id,int updateCount,String evaluateCom){
+        updateSum(conn,comment_id,user_id,updateCount,evaluateCom,"plus");
+    }
+
+    public void updateEvaluateCountDown(Connection conn,int essay_id,int user_id,int updateCount,String evaluate){
+        updateSum(conn,essay_id,user_id,updateCount,evaluate,"minus");
+    }
+    public void updateFavoriteCountDown(Connection conn,int essay_id,int user_id,int updateCount){
+        updateSum(conn,essay_id,user_id,updateCount,"favorite","minus");
+    }
+    public void updateEvaluateComCountDown(Connection conn,int comment_id,int user_id,int updateCount,String evaluateCom){
+        updateSum(conn,comment_id,user_id,updateCount,evaluateCom,"minus");
+    }
+
+    public Essay visitor(Connection conn, int essay_id,int user_id,Essay essay){
+        ArrayList list=new ArrayList();
+        Integer visitorCount=getVisitorCount(conn,essay_id);
+        EssayIDManger eim=new EssayIDManger();
+        //如果此用户id没有访问过此essay_id，则更新两张表，两者以此建立联系
+        if(!eim.isVisitor(conn,essay_id,user_id)) {
+            visitorCount++;
+            updateVisitorCountUp(conn,essay_id,user_id,visitorCount);
+        }
+        essay.setVisitor(visitorCount);
+        return essay;
     }
     //evaluate的值是"star"或者"diss"
     public Essay evaluate(Connection conn, int essay_id,int user_id,Essay essay,String evaluate){
         ResultSet rs=null;
         boolean isOperate=true;
-        try{
-            String sql="select "+evaluate+" from BLOG_TB_ESSAY where id=?";
-            ArrayList list =new ArrayList();
-            list.add(essay_id);
-            rs=sql_jdbc.prepareStatement("QUERY",conn,sql,list);
-            list.clear();
-            while(rs.next()){
-                Integer evaluateCount=null;
-                EssayIDManger eim=new EssayIDManger();
-                if(evaluate.equals("star")){
-                    evaluateCount=rs.getInt("star");
-                    isOperate=eim.isStar(conn,essay_id,user_id);
-                }else if(evaluate.equals("diss")){
-                    evaluateCount=rs.getInt("diss");
-                    isOperate=eim.isDiss(conn,essay_id,user_id);
-                }
-                if(!isOperate) {
-                    evaluateCount++;
-                    String sql1 = "update blog_tb_essay set "+evaluate+"=? where id=?";
-                    list.add(evaluateCount);
-                    list.add(essay_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
-                    list.clear();
-                    String sql2="insert into blog_tb_essay_"+evaluate+"(user_id,essay_id)values(?,?)";
-                    list.add(user_id);
-                    list.add(essay_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql2,list);
-                    list.clear();
-                }else if(user_id!=0){
-                    evaluateCount--;
-                    String sql1 = "update blog_tb_essay set "+evaluate+"=? where id=?";
-                    list.add(evaluateCount);
-                    list.add(essay_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
-                    list.clear();
-                    String sql2="delete from BLOG_TB_ESSAY_"+evaluate+" where user_id=? and essay_id=?";
-                    list.add(user_id);
-                    list.add(essay_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql2,list);
-                }
-                if(evaluate.equals("star")){
-                    essay.setStar(evaluateCount);
-                }else if(evaluate.equals("diss")){
-                    essay.setDiss(evaluateCount);
-                }
-            }
-            rs.close();
-
-        }catch(SQLException e){
-            e.printStackTrace();
+        Integer evaluateCount=null;
+        ArrayList list =new ArrayList();
+        EssayIDManger eim=new EssayIDManger();
+        if(evaluate.equals("star")){
+            evaluateCount=getStarCount(conn,essay_id);
+            isOperate=eim.isStar(conn,essay_id,user_id);
+        }else if(evaluate.equals("diss")){
+            evaluateCount=getDissCount(conn,essay_id);
+            isOperate=eim.isDiss(conn,essay_id,user_id);
         }
+        if(!isOperate) {
+            evaluateCount++;
+            updateEvaluateCountUp(conn,essay_id,user_id,evaluateCount,evaluate);
+        }else if(user_id!=0){
+            evaluateCount--;
+            updateEvaluateCountDown(conn,essay_id,user_id,evaluateCount,evaluate);
+        }
+        if(evaluate.equals("star")){
+            essay.setStar(evaluateCount);
+        }else if(evaluate.equals("diss")){
+            essay.setDiss(evaluateCount);
+        }
+
         return essay;
     }
     public Essay star(Connection conn, int essay_id,int user_id,Essay essay){
@@ -253,21 +306,15 @@ public class Utils {
         Comment[]comments=null;
         ResultSet rs=null;
         ArrayList list=new ArrayList();
+        Integer commentsCount = getCommentsCount(conn,essay_id);
+        if ( commentsCount< 1) {
+            comments = new Comment[0];
+            return comments;
+        }
         try{
-            String sql="select count(*) from BLOG_TB_COMMENT where essay_id=?";
-            list.add(essay_id);
-            rs=sql_jdbc.prepareStatement("QUERY",conn,sql,list);
-            int count=0;
-            rs.first();
-            count=rs.getInt(1);
-            if ( count< 1) {
-                comments = new Comment[0];
-                rs.close();
-                return comments;
-            }
             String sql2="select *from BLOG_TB_COMMENT where essay_id=?";
             rs=sql_jdbc.prepareStatement("QUERY",conn,sql2,list);
-            comments=new Comment[count];
+            comments=new Comment[commentsCount];
             int tmp=0;
             while(rs.next()){
                 Comment comment=new Comment();
@@ -282,73 +329,35 @@ public class Utils {
         return comments;
     }
     public Essay comments(Connection conn, int essay_id,Essay essay){
-        ResultSet rs=null;
         ArrayList list=new ArrayList();
-        try{
-            String sql="select comments from BLOG_TB_ESSAY where id=?";
-            list.add(essay_id);
-            rs=sql_jdbc.prepareStatement("QUERY",conn,sql,list);
-            list.clear();
-            while(rs.next()) {
-                Integer comments = rs.getInt("comments");
-                comments++;
-                essay.setComments(comments);
-                String sql1 = "update BLOG_TB_ESSAY set comments=? where id=?";
-                list.add(comments);
-                list.add(essay_id);
-                sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
-                rs.close();
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-           return essay;
+        Integer commentsCount =getCommentsCount(conn,essay_id);
+        commentsCount++;
+        essay.setComments(commentsCount);
+        String sql1 = "update BLOG_TB_ESSAY set comments=? where id=?";
+        list.add(commentsCount);
+        list.add(essay_id);
+        sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
+        return essay;
     }
-    public void evaluateCom(Connection conn,Integer comment_id,Integer user_id,String evaluateCom){
-        ResultSet rs=null;
-        boolean isOperate=true;
-        ArrayList list=new ArrayList();
-        try{
-            String sql="select "+evaluateCom+" from blog_tb_comment where id=?";
-            list.add(comment_id);
-            rs=sql_jdbc.prepareStatement("QUERY",conn,sql,list);
-            list.clear();
-            while(rs.next()){
-                Integer evaluateComCount=rs.getInt(evaluateCom);
-                CommentIDManger cim=new CommentIDManger();
-                if(evaluateCom.equals("star")){
-                    isOperate=cim.isStar(conn,comment_id,user_id);
-                }else if(evaluateCom.equals("diss")){
-                    isOperate=cim.isDiss(conn,comment_id,user_id);
-                }
-                if(!cim.isStar(conn,user_id,comment_id)) {
-                    evaluateComCount++;
-                    String sql1 = "update blog_tb_comment set "+evaluateCom+"=? where id=?";
-                    list.add(evaluateComCount);
-                    list.add(comment_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
-                    list.clear();
-                    String sql2="insert into blog_tb_comment_"+evaluateCom+"(user_id,comment_id)values(?,?)";
-                    list.add(user_id);
-                    list.add(comment_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql2,list);
-                    list.clear();
-                }else if(user_id!=0){
-                    evaluateComCount--;
-                    String sql1 = "update blog_tb_comment set "+evaluateCom+"=? where id=?";
-                    list.add(evaluateComCount);
-                    list.add(comment_id);
-                    sql_jdbc.prepareStatement("UPDATE",conn,sql1,list);
-                    list.clear();
-                    String sql2="delete from blog_tb_comment_"+evaluateCom+" where user_id=? and comment_id=?";
-                    list.add(user_id);
-                    list.add(comment_id);
-                   sql_jdbc.prepareStatement("UPDATE",conn,sql2,list);
-                }
-            }
-            rs.close();
-        }catch(SQLException e){
-            e.printStackTrace();
+    public void evaluateCom(Connection conn,Integer comment_id,Integer user_id,String evaluateCom) {
+        ResultSet rs = null;
+        boolean isOperate = true;
+        ArrayList list = new ArrayList();
+        Integer evaluateComCount = null;
+        CommentIDManger cim = new CommentIDManger();
+        if (evaluateCom.equals("star")) {
+            isOperate = cim.isStar(conn, comment_id, user_id);
+            evaluateComCount = getStarComCount(conn, comment_id);
+        } else if (evaluateCom.equals("diss")) {
+            isOperate = cim.isDiss(conn, comment_id, user_id);
+            evaluateComCount = getDissComCount(conn, comment_id);
+        }
+        if (!isOperate) {
+            evaluateComCount++;
+            updateEvaluateComCountUp(conn,comment_id,user_id,evaluateComCount,evaluateCom);
+        } else if (user_id != 0) {
+            evaluateComCount--;
+            updateEvaluateComCountDown(conn,comment_id,user_id,evaluateComCount,evaluateCom);
         }
     }
     public void starCom(Connection conn,Integer comment_id,Integer user_id){

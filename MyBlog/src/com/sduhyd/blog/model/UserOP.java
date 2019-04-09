@@ -14,7 +14,7 @@ public class UserOP {
         ResultSet rs=null;
         ArrayList list=new ArrayList();
         ArrayList<Essay> arrayList = new ArrayList<>();
-        ArrayList<Integer> index=new ArrayList<>();
+        ArrayList<Integer> index=new ArrayList<>();//存储着文章符合要求的essay_id
         try{
             String sql = "select *from BLOG_TB_ESSAY_FAVORITE where user_id=?";
             list.add(user_id);

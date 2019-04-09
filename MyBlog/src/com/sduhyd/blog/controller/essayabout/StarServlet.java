@@ -1,6 +1,7 @@
 package com.sduhyd.blog.controller.essayabout;
 
 import com.sduhyd.blog.bean.User;
+import com.sduhyd.blog.controller.EssayPageDataServlet;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.Utils;
 import com.sduhyd.blog.bean.Comment;
@@ -17,22 +18,17 @@ import java.io.IOException;
 import java.sql.Connection;
 
 @WebServlet(name = "StarServlet")
-public class StarServlet extends HttpServlet {
+public class StarServlet extends EssayPageDataServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             doGet(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Essay[]essays=null;
-        Connection conn=(Connection) getServletContext().getAttribute("conn");
-        synchronized (getServletContext()){
-            ServletContext context=getServletContext();
-            essays=(Essay[]) context.getAttribute("all_essays");
-        }
+        loadContextData(request,response);
         for(int i=0;i<essays.length;i++){
             if(essays[i].getId().equals(Integer.valueOf(request.getParameter("essay_id")))){
                 HttpSession session=request.getSession(false);;
-                User current_user=(User)session.getAttribute("current_user");
+                current_user=(User)session.getAttribute("current_user");
                 Essay essay=new Utils().star(conn,Integer.valueOf(request.getParameter("essay_id")),current_user.getId(),essays[i]);
                 request.setAttribute("current_essay",essay);
             }
