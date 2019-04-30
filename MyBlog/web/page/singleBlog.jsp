@@ -46,9 +46,9 @@
         </div>
         <!--点赞-->
         <div>
-            <a href="/StarServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${requestScope.current_essay.star}&nbsp;</span></a>
-            <a href="/DisServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}&nbsp;</span></a>
-            <a href="/FavoriteServlet?essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-heart-empty">${requestScope.current_essay.favorite}&nbsp;</span></a>
+            <a href="/UpdateAndLoadEssayPageDataServlet?essay_id=${requestScope.current_essay.id}&FLAG=${"STAR"}"><span class="glyphicon glyphicon-thumbs-up">${requestScope.current_essay.star}&nbsp;</span></a>
+            <a href="/UpdateAndLoadEssayPageDataServlet?essay_id=${requestScope.current_essay.id}&FLAG=${"DISS"}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}&nbsp;</span></a>
+            <a href="/UpdateAndLoadEssayPageDataServlet?essay_id=${requestScope.current_essay.id}&FLAG=${"FAVORITE"}"><span class="glyphicon glyphicon-heart-empty">${requestScope.current_essay.favorite}&nbsp;</span></a>
         </div>
         <!-- 评论 -->
         <div>
@@ -58,8 +58,9 @@
                         <span class="glyphicon glyphicon-edit">写评论</span>
                         <br>
                         <!--隐藏input，好东西-->
-                        <form role="form" action="/CommentServlet" method="post" name="writeComForm">
+                        <form role="form" action="/UpdateAndLoadEssayPageDataServlet" method="post" name="writeComForm">
                             <input type="hidden" name="essay_id" value="${requestScope.current_essay.id}">
+                            <input type="hidden" name="FLAG" value="${"COMMENT"}">
                             <div class="form-group">
                                 <label for="content">文本框</label>
                                 <textarea id="content" name="comment" class="form-control" rows="3"></textarea>
@@ -84,8 +85,8 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">${comment.username}</h3>
                             <span>${comment.creation_time}</span>
-                            <a href="/StarComServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-up">${comment.star}&nbsp;</span></a>
-                            <a href="/DisComServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
+                            <a href="/UpdateAndLoadEssayPageDataServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}&FLAG=${"STARCOM"}"><span class="glyphicon glyphicon-thumbs-up">${comment.star}&nbsp;</span></a>
+                            <a href="/UpdateAndLoadEssayPageDataServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}&FLAG=${"DISSCOM"}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
                         </div>
                         <div class="panel-body">
                             ${comment.content}

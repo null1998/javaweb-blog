@@ -1,6 +1,5 @@
 package com.sduhyd.blog.controller.userabout;
 
-import com.sduhyd.blog.controller.BlogDataServlet;
 import com.sduhyd.blog.model.Utils;
 import com.sduhyd.blog.bean.User;
 
@@ -31,7 +30,7 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession(false);
                 session.setAttribute("current_user", user);
             }
-            response.sendRedirect("/InitServlet");
+            response.sendRedirect("/InitAndUpdateBlogDataServlet");
         }else {
             response.sendRedirect("/page/errorPage1.jsp");
         }

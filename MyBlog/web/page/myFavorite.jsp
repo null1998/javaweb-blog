@@ -22,7 +22,7 @@
     <div class="col-sm-4">
         <ul class="nav nav-pills nav-stacked">
             <c:forEach var="myfavorite_essay" items="${requestScope.myfavorite_essays}">
-                <li><a href="/essaypage?essay_id=${myfavorite_essay.id}"><span class="glyphicon glyphicon-heart-empty">${myfavorite_essay.favorite}&nbsp;${myfavorite_essay.title}&nbsp;${myfavorite_essay.username}&nbsp;</span></a><a href="DeleteMyFavoriteServlet?essay_id=${myfavorite_essay.id}&user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-trash"></span></a></li>
+                <li><a href="/InitEssayPageServlet?essay_id=${myfavorite_essay.id}"><span class="glyphicon glyphicon-heart-empty">${myfavorite_essay.favorite}&nbsp;${myfavorite_essay.title}&nbsp;${myfavorite_essay.username}&nbsp;</span></a><a href="DeleteMyFavoriteServlet?essay_id=${myfavorite_essay.id}&user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-trash"></span></a></li>
             </c:forEach>
         </ul>
         <hr class="hidden-sm hidden-md hidden-lg">

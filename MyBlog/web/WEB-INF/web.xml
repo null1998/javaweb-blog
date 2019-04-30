@@ -7,51 +7,65 @@
         <param-name>url-database</param-name>
         <param-value>localhost:3306/DB_BLOG</param-value>
     </context-param>
+
     <listener>
         <listener-class>com.sduhyd.blog.others.ApplicationListener</listener-class>
     </listener>
     <listener>
         <listener-class>com.sduhyd.blog.others.SessionListener</listener-class>
     </listener>
+
     <session-config>
         <session-timeout>15</session-timeout>
     </session-config>
+
+
     <servlet>
-        <servlet-name>InitServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.initpageabout.InitServlet</servlet-class>
+        <servlet-name>InitAndUpdateBlogDataServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.data.InitAndUpdateBlogDataServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>InitServlet</servlet-name>
-        <url-pattern>/InitServlet</url-pattern>
+        <servlet-name>InitAndUpdateBlogDataServlet</servlet-name>
+        <url-pattern>/InitAndUpdateBlogDataServlet</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>InitEssayPageServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.data.InitEssayPageDataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InitEssayPageServlet</servlet-name>
+        <url-pattern>/InitEssayPageServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>NullUserServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.data.NullUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NullUserServlet</servlet-name>
+        <url-pattern>/NullUserServlet</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>BlogMainPageServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.initpageabout.BlogMainPageServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.controller.BlogMainPageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BlogMainPageServlet</servlet-name>
         <url-pattern>/mainpage</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>EssaySinglePageServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.initpageabout.EssaySinglePageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EssaySinglePageServlet</servlet-name>
-        <url-pattern>/essaypage</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>NullUserServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.initpageabout.NullUserServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>NullUserServlet</servlet-name>
-        <url-pattern>/nulluserpage</url-pattern>
-    </servlet-mapping>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.LoginServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>MyFavoriteServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.MyFavoriteServlet</servlet-class>
@@ -61,6 +75,7 @@
         <url-pattern>/MyFavoriteServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+
         <servlet-name>DeleteMyFavoriteServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.DeleteMyFavoriteServlet</servlet-class>
     </servlet>
@@ -68,10 +83,8 @@
         <servlet-name>DeleteMyFavoriteServlet</servlet-name>
         <url-pattern>/DeleteMyFavoriteServlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
+
+
 
     <servlet>
         <servlet-name>LogOutServlet</servlet-name>
@@ -81,6 +94,7 @@
         <servlet-name>LogOutServlet</servlet-name>
         <url-pattern>/LogOutServlet</url-pattern>
     </servlet-mapping>
+
    <servlet>
        <servlet-name>CreateEssayServlet</servlet-name>
        <servlet-class>com.sduhyd.blog.controller.userabout.CreateEssayServlet</servlet-class>
@@ -89,6 +103,7 @@
         <servlet-name>CreateEssayServlet</servlet-name>
         <url-pattern>/CreateEssayServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>ShowEssayServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.ShowEssayServlet</servlet-class>
@@ -97,6 +112,7 @@
         <servlet-name>ShowEssayServlet</servlet-name>
         <url-pattern>/ShowEssayServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.RegisterServlet</servlet-class>
@@ -105,6 +121,8 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
+
+
     <servlet>
         <servlet-name>UpdateEssayServlet</servlet-name>
         <servlet-class>com.sduhyd.blog.controller.userabout.UpdateEssayServlet</servlet-class>
@@ -113,53 +131,15 @@
         <servlet-name>UpdateEssayServlet</servlet-name>
         <url-pattern>/UpdateEssayServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>StarServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.essayabout.StarServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StarServlet</servlet-name>
-        <url-pattern>/StarServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>DisServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.essayabout.DisServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DisServlet</servlet-name>
-        <url-pattern>/DisServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>FavoriteServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.essayabout.FavoriteServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FavoriteServlet</servlet-name>
-        <url-pattern>/FavoriteServlet</url-pattern>
-    </servlet-mapping>
 
     <servlet>
-        <servlet-name>CommentServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.essayabout.CommentServlet</servlet-class>
+        <servlet-name>UpdateAndLoadEssayPageDataServlet</servlet-name>
+        <servlet-class>com.sduhyd.blog.controller.data.UpdateAndLoadEssayPageDataServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CommentServlet</servlet-name>
-        <url-pattern>/CommentServlet</url-pattern>
+        <servlet-name>UpdateAndLoadEssayPageDataServlet</servlet-name>
+        <url-pattern>/UpdateAndLoadEssayPageDataServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>StarComServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.commentabout.StarComServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StarComServlet</servlet-name>
-        <url-pattern>/StarComServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>DisComServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.commentabout.DisComServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DisComServlet</servlet-name>
-        <url-pattern>/DisComServlet</url-pattern>
-    </servlet-mapping>
+
+
 </web-app>

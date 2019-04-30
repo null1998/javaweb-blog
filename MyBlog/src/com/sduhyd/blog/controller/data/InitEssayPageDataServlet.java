@@ -1,24 +1,22 @@
-package com.sduhyd.blog.controller.initpageabout;
+package com.sduhyd.blog.controller.data;
 
 import com.sduhyd.blog.bean.User;
-import com.sduhyd.blog.controller.BlogDataServlet;
-import com.sduhyd.blog.controller.EssayPageDataServlet;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.Utils;
 import com.sduhyd.blog.bean.Comment;
 import com.sduhyd.blog.bean.Essay;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
 
-//在点开一篇博客前，对于其中的数据进行初始化
-public class EssaySinglePageServlet extends BlogDataServlet {
+/**
+ * 用于初始化阅读博客界面的数据essay和sort_comments
+ */
+
+public class InitEssayPageDataServlet extends LoadBlogDataServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
              doGet(request,response);
     }
@@ -26,11 +24,11 @@ public class EssaySinglePageServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             request.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=utf-8");
-            initEssayPageData(request,response);
+            initEssayPageData(request);
             request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
 
     }
-    protected  void initEssayPageData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected  void initEssayPageData(HttpServletRequest request){
         Comment[]comments=new Utils().getComments(conn,Integer.valueOf(request.getParameter("essay_id")));
         Comment[]sort_comments=new SortUtils().sortCom(comments);
         request.setAttribute("current_comments",sort_comments);

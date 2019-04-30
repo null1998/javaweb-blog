@@ -1,14 +1,10 @@
-package com.sduhyd.blog.controller;
+package com.sduhyd.blog.controller.data;
 
 import com.sduhyd.blog.bean.Essay;
 import com.sduhyd.blog.bean.User;
-import com.sduhyd.blog.model.SortUtils;
-import com.sduhyd.blog.model.Utils;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
 /**
-* BlogDataServlet作为这个项目的一个重要基类，
+* LoadBlogDataServlet作为这个项目的一个重要基类，
 * 重写了HttpServlet里的service(HttpServletRequest,HttpServletResponse)方法，因为
 * 该方法里有用到maybeSetLastModified(HttpServletResponse,long)方法，而此方法在HttpServlet
 * 里是私有的，所以也重写了maybeSetLastModified(HttpServletResponse,long)方法
@@ -31,8 +26,8 @@ import java.util.ResourceBundle;
 * 这样任何继承了此类的所有Servlet类在其准备执行doGet()和doPost时
 * 便可以使用这些变量
 * */
-@WebServlet(name = "BlogDataServlet")
-public class BlogDataServlet extends HttpServlet {
+
+public class LoadBlogDataServlet extends HttpServlet {
     protected Connection conn;
     protected Essay[]essays=null;
     protected Essay[]top_essays=null;

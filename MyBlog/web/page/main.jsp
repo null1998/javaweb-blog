@@ -63,7 +63,7 @@
             <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
                 <c:forEach var="top_essay" items="${applicationScope.top_essays}">
-                    <li><a href="/essaypage?essay_id=${top_essay.id}&current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
+                    <li><a href="/InitEssayPageServlet?essay_id=${top_essay.id}&current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
                 </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -84,7 +84,7 @@
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>
-                    <a href="/essaypage?essay_id=${essay.id}&current_user_id=${sessionScope.current_user.id}">阅读全文</a>
+                    <a href="/InitEssayPageServlet?essay_id=${essay.id}&current_user_id=${sessionScope.current_user.id}">阅读全文</a>
                     <br/>
                 </div>
                 </c:forEach>

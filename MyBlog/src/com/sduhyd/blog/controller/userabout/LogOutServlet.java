@@ -19,7 +19,7 @@ public class LogOutServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         session.invalidate();
         //这里有个问题，以上两个不起作用？调用后session里的current_user仍然存在
-        response.sendRedirect("/nulluserpage");
+        response.sendRedirect("/NullUserServlet");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

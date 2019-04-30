@@ -1,24 +1,19 @@
 package com.sduhyd.blog.controller.userabout;
 
 import com.sduhyd.blog.bean.Essay;
-import com.sduhyd.blog.bean.User;
-import com.sduhyd.blog.controller.BlogDataServlet;
+import com.sduhyd.blog.controller.data.LoadBlogDataServlet;
 import com.sduhyd.blog.model.SortUtils;
 import com.sduhyd.blog.model.UserOP;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 @WebServlet(name = "MyFavoriteServlet")
-public class MyFavoriteServlet extends BlogDataServlet {
+public class MyFavoriteServlet extends LoadBlogDataServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
            doGet(request,response);
     }

@@ -25,7 +25,7 @@ public class RegisterServlet extends HttpServlet {
         String password=request.getParameter("password");
         User user=new Utils().register(conn,username,password);
         if(user != null) {
-            response.sendRedirect("/InitServlet");
+            response.sendRedirect("/InitAndUpdateBlogDataServlet");
         }else {
             response.sendRedirect("/page/errorPage1.jsp");
         }
