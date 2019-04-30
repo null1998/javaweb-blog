@@ -25,7 +25,7 @@ public class DisComServlet extends EssayPageDataServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        loadEssayPageData(request,response,"disCom");
+        loadEssayPageData(request,"disCom");
         request.setAttribute("current_essay",essay);
         request.setAttribute("current_comments",sort_comments);
         request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);

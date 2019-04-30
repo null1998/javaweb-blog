@@ -24,7 +24,7 @@ public class CommentServlet extends EssayPageDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        loadEssayPageData(request,response,"comment");
+        loadEssayPageData(request,"comment");
         request.setAttribute("current_essay",essay);
         request.setAttribute("sort_comments",sort_comments);
         request.getRequestDispatcher("/essaypage").forward(request,response);

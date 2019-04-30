@@ -29,13 +29,13 @@ public class InitServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Connection conn=(Connection) context.getAttribute("conn");
         ArrayList<Essay> arrayList = new Utils().allEssay(conn);
-        if (!arrayList.isEmpty()) {
+        //if (!arrayList.isEmpty()) { 这里不应该做空判断，应该在得到了context里的值后再进行判断。
             Essay[]essays=new SortUtils().reverseEssay(arrayList);
             Essay[]top_essays=new SortUtils().sortEssay(arrayList);
             synchronized (request.getServletContext()){
                 context.setAttribute("all_essays",essays);
                 context.setAttribute("top_essays",top_essays);
             }
-        }
+       // }
     }
 }

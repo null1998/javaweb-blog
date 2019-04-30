@@ -18,7 +18,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 //index.jsp后的第一个servlet。无用户
-public class NullUserServlet extends BlogDataServlet {
+public class NullUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             doGet(request,response);
     }

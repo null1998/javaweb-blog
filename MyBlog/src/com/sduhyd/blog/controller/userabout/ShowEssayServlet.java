@@ -22,8 +22,6 @@ public class ShowEssayServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        loadContextData(request,response);
-        loadSessionData(request,response);
         Essay[] essays=new Utils().showEssay(conn,current_user.getId());
         synchronized (request.getSession(false)){
             HttpSession session = request.getSession(false);

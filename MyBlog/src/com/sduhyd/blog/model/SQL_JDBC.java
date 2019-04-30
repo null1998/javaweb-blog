@@ -33,7 +33,7 @@ public class SQL_JDBC {
             e.printStackTrace();
         }
     }
-    //FLAG 0 executeQuery,1 ececuteUpdate  //list中的数据按SQL中？的顺序存储
+    //FLAG 'QUERY' executeQuery,'UPDATE' ececuteUpdate  //list中的数据按SQL中？的顺序存储
     public ResultSet prepareStatement(String FLAG,Connection conn,String sql, ArrayList list){
         ResultSet rs=null;
         try{

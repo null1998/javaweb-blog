@@ -24,8 +24,6 @@ public class CreateEssayServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        loadContextData(request,response);
-        loadSessionData(request,response);
         Integer user_id=current_user.getId();
         String username = current_user.getUsername();
         String title = request.getParameter("create_title");

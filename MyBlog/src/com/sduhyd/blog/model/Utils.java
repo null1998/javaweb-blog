@@ -46,7 +46,7 @@ public class Utils {
         User user=null;
         ResultSet rs=null;
         ArrayList list=new ArrayList();
-        String sql_login = "select password from BLOG_TB_USER where username = ?";
+        String sql_login = "select *from BLOG_TB_USER where username = ?";
         list.add(username);
         rs=sql_jdbc.prepareStatement("QUERY",conn,sql_login,list);
         try {
@@ -54,7 +54,7 @@ public class Utils {
                 String qpassword = rs.getString("password");
                 if(qpassword != null && qpassword.equals(password)) {
                     user = new User();
-                    user.initUser(rs.getInt(1),username,qpassword);
+                    user.initUser(rs.getInt("id"),username,qpassword);
                     return user;
                 }
             }

@@ -25,7 +25,6 @@ public class BlogMainPageServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        loadContextData(request,response);
         response.sendRedirect(request.getContextPath()+"/page/main.jsp");
     }
     @Override

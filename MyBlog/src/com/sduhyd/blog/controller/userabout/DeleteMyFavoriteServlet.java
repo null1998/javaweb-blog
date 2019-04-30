@@ -23,8 +23,6 @@ public class DeleteMyFavoriteServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        loadContextData(request,response);
-        loadSessionData(request,response);
         new UserOP().deleteMyFavorite(conn,current_user.getId(),Integer.valueOf(request.getParameter("essay_id")));
         response.sendRedirect("/MyFavoriteServlet");
     }

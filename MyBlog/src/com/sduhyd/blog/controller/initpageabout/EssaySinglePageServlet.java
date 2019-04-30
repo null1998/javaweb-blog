@@ -26,7 +26,6 @@ public class EssaySinglePageServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             request.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=utf-8");
-            loadContextData(request,response);
             initEssayPageData(request,response);
             request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
 

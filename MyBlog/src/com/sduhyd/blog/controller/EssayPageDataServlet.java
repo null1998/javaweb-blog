@@ -15,12 +15,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ *该类继承了BlogDataServlet
+ * 因此它可以获取ServletContext和HttpSession里的数据
+ *  同时它本身也作为基类
+ *  主要的作用是通过loadEssayPageData(HttpServletRequest,HttpServletResponse,String)方法
+ *  加载了在阅读博客界面所需的一些数据
+ *
+ */
+
 //除了继承BlogDataServlet，还能载入单独博客界面所需的数据，并且作为/essayabout里所有servlet基类，方便其获取数据
 @WebServlet(name = "EssayPageDataServlet")
 public class EssayPageDataServlet extends BlogDataServlet {
     protected Integer essay_id;
     protected Essay essay;
     protected Comment sort_comments[];
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -28,9 +39,7 @@ public class EssayPageDataServlet extends BlogDataServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
-    protected void loadEssayPageData(HttpServletRequest request, HttpServletResponse response,String FLAG)throws ServletException, IOException{
-        loadContextData(request,response);
-        loadSessionData(request,response);
+    protected void loadEssayPageData(HttpServletRequest request,String FLAG){
         essay_id=Integer.valueOf(request.getParameter("essay_id"));
         for(int i=0;i<essays.length;i++){
             if(essays[i].getId().equals(essay_id)){
