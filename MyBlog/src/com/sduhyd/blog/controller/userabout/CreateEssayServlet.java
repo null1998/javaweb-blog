@@ -19,10 +19,8 @@ public class CreateEssayServlet extends LoadBlogDataServlet {
         String username = current_user.getUsername();
         String title = request.getParameter("create_title");
         String article = request.getParameter("create_article");
-        Date modify_time=new Date();
-        new Utils().createEssay(conn,user_id,title,article,modify_time,username);
+        new Utils().createEssay(conn,user_id,title,article,new Date(),username);
         response.sendRedirect("/InitAndUpdateBlogDataServlet");
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

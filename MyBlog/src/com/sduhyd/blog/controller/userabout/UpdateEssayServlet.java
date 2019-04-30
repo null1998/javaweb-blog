@@ -12,11 +12,6 @@ import java.sql.Connection;
 //暂时没用
 public class UpdateEssayServlet extends HttpServlet {
     @Override
-    public void init() throws ServletException {
-        super.init();
-    }
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
@@ -30,8 +25,5 @@ public class UpdateEssayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
+
 }

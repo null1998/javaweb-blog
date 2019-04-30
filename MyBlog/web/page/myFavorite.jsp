@@ -15,7 +15,7 @@
 </head>
 <body>
 <div>
-    <a href="/InitServlet"><span class="glyphicon glyphicon-home">返回首页</span></a>
+    <a href="/InitAndUpdateBlogDataServlet"><span class="glyphicon glyphicon-home">返回首页</span></a>
 </div>
 <br>
 <div class="row">

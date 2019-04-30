@@ -19,8 +19,6 @@ public class MyFavoriteServlet extends LoadBlogDataServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=utf-8");
         ArrayList<Essay> arrayList=new UserOP().myFavorite(conn,current_user.getId());
         if (!arrayList.isEmpty()) {
             Essay[] myfavorite_essays=new SortUtils().reverseEssay(arrayList);

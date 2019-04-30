@@ -10,11 +10,6 @@ import java.io.IOException;
 
 public class LogOutServlet extends HttpServlet {
     @Override
-    public void init() throws ServletException {
-        super.init();
-    }
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.invalidate();
@@ -24,10 +19,5 @@ public class LogOutServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
-    }
-    @Override
-    public void destroy() {
-        super.destroy();
-
     }
 }

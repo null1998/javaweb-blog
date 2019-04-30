@@ -7,24 +7,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
+import com.sduhyd.blog.controller.data.LoadBlogDataServlet;
 import com.sduhyd.blog.model.Utils;
 import com.sduhyd.blog.bean.User;
 
-public class RegisterServlet extends HttpServlet {
+public class RegisterServlet extends LoadBlogDataServlet {
     @Override
-    public void init() throws ServletException {
-        super.init();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=utf-8");
-        Connection conn=(Connection) getServletContext().getAttribute("conn");
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-        User user=new Utils().register(conn,username,password);
-        if(user != null) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        current_user=new Utils().register(conn,request.getParameter("username"),request.getParameter("password"));
+        if(current_user.getId()!= 0) {
             response.sendRedirect("/InitAndUpdateBlogDataServlet");
         }else {
             response.sendRedirect("/page/errorPage1.jsp");
@@ -33,9 +24,5 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        doGet(request,response);
-    }
-    @Override
-    public void destroy() {
-        super.destroy();
     }
 }
