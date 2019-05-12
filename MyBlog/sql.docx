@@ -1,11 +1,16 @@
 
 
-create table BLOG_TB_USER(id int not null auto_increment,
+create table BLOG_TB_USER(
+id int not null auto_increment,
 username char(10) not null,
 password char(10) not null,
-primary key(id)
+primary key(id,username)
 );
-create table BLOG_TB_ESSAY(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_ESSAY(
+id int not null auto_increment,
+user_id int not null,
 username char(10) not null,
 creation_time datetime not null,
 modify_time datetime not null,
@@ -15,40 +20,93 @@ star int not null,
 diss int not null,
 comments int not null,
 visitor int not null,
-primary key(id)
+favorite int not null,
+primary key(id),
+foreign key(user_id,username) references BLOG_TB_USER(id,username) ON UPDATE CASCADE ON DELETE CASCADE
 );
-create table BLOG_TB_COMMENT(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_COMMENT(
+id int not null auto_increment,
+user_id int not null,
 essay_id int not null,
 star int not null,
 diss int not null,
 username char(10) not null,
 content text not null,
 creation_time datetime not null,
-primary key(id)
+primary key(id),
+foreign key(user_id,username) references BLOG_TB_USER(id,username) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(essay_id) references BLOG_TB_ESSAY(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-drop table tablename;
-delete from tablename where;
-create table BLOG_TB_VISITE(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_ESSAY_VISITOR(
+id int not null auto_increment,
+user_id int not null,
 essay_id int not null,
-primary key(id)
+primary key(id),
+foreign key(user_id) references BLOG_TB_USER(id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(essay_id) references BLOG_TB_ESSAY(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-create table BLOG_TB_ESSAY_STAR(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_ESSAY_STAR(
+id int not null auto_increment,
+user_id int not null,
 essay_id int not null,
-primary key(id)
+primary key(id),
+foreign key(user_id) references BLOG_TB_USER(id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(essay_id) references BLOG_TB_ESSAY(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-create table BLOG_TB_ESSAY_DISS(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_ESSAY_DISS(
+id int not null auto_increment,
+user_id int not null,
 essay_id int not null,
-primary key(id)
+primary key(id),
+foreign key(user_id) references BLOG_TB_USER(id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(essay_id) references BLOG_TB_ESSAY(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-create table BLOG_TB_COMMENT_STAR(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_ESSAY_FAVORITE(
+id int not null auto_increment,
+user_id int not null,
+essay_id int not null,
+primary key(id),
+foreign key(user_id) references BLOG_TB_USER(id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(essay_id) references BLOG_TB_ESSAY(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+create table BLOG_TB_COMMENT_STAR(
+id int not null auto_increment,
+user_id int not null,
 comment_id int not null,
-primary key(id)
+primary key(id),
+foreign key(user_id) references BLOG_TB_USER(id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(comment_id) references BLOG_TB_COMMENT(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-create table BLOG_TB_COMMENT_DISS(id int not null auto_increment,user_id int not null,
+
+
+create table BLOG_TB_COMMENT_DISS(
+id int not null auto_increment,
+user_id int not null,
 comment_id int not null,
-primary key(id)
+primary key(id),
+foreign key(user_id) references BLOG_TB_USER(id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(comment_id) references BLOG_TB_COMMENT(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-create table BLOG_TB_ESSAY_FAVORITE(id int not null auto_increment,user_id int not null,
-essay_id int not null,
-primary key(id)
-);
+
+
+
+
+
+删除外键
+1、show create table 表名;查看建表语言
+2、alter table 表名 drop foreign key 外键号;
+然后添加外键
+alter table 表名 add constraint FK_自定义 foreign key(你的外键字段名) REFERENCES 外表表名(对应的表的主键字段名);
+
