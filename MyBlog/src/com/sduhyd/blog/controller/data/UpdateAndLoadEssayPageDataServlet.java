@@ -14,7 +14,6 @@ import java.io.IOException;
 /**
  *该类继承了LoadBlogDataServlet
  * 因此它可以获取ServletContext和HttpSession里的数据
- *  同时它本身也作为基类
  *  主要的作用是通过updateAndLoadEssayPageData(HttpServletRequest,HttpServletResponse,String)方法
  *  在完成点赞、评论、收藏、评论等操作后，更新阅读博客界面的数据 essay和sort_comments
  */
