@@ -13,13 +13,12 @@
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="/css/singleblog.css" rel="stylesheet">
-    <script src="../js/writeComment.js"></script>
 </head>
 <body>
     <div>
       <div>
           <div>
-              <a href="/InitAndUpdateBlogDataServlet"><span class="glyphicon glyphicon-home">返回首页</span></a>
+              <a href="/BaseServlet/MainPage/getData"><span class="glyphicon glyphicon-home">返回首页</span></a>
           </div>
       </div>
         <!--文章基本信息-->
@@ -46,9 +45,9 @@
         </div>
         <!--点赞-->
         <div>
-            <a href="/UpdateAndLoadEssayPageDataServlet?essay_id=${requestScope.current_essay.id}&FLAG=${"STAR"}"><span class="glyphicon glyphicon-thumbs-up">${requestScope.current_essay.star}&nbsp;</span></a>
-            <a href="/UpdateAndLoadEssayPageDataServlet?essay_id=${requestScope.current_essay.id}&FLAG=${"DISS"}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}&nbsp;</span></a>
-            <a href="/UpdateAndLoadEssayPageDataServlet?essay_id=${requestScope.current_essay.id}&FLAG=${"FAVORITE"}"><span class="glyphicon glyphicon-heart-empty">${requestScope.current_essay.favorite}&nbsp;</span></a>
+            <a href="/BaseServlet/EssayPage/setData?essay_id=${requestScope.current_essay.id}&FLAG=${"STAR"}"><span class="glyphicon glyphicon-thumbs-up">${requestScope.current_essay.star}&nbsp;</span></a>
+            <a href="/BaseServlet/EssayPage/setData?essay_id=${requestScope.current_essay.id}&FLAG=${"DISS"}"><span class="glyphicon glyphicon-thumbs-down">${requestScope.current_essay.diss}&nbsp;</span></a>
+            <a href="/BaseServlet/EssayPage/setData?essay_id=${requestScope.current_essay.id}&FLAG=${"FAVORITE"}"><span class="glyphicon glyphicon-heart-empty">${requestScope.current_essay.favorite}&nbsp;</span></a>
         </div>
         <!-- 评论 -->
         <div>
@@ -58,7 +57,7 @@
                         <span class="glyphicon glyphicon-edit">写评论</span>
                         <br>
                         <!--隐藏input，好东西-->
-                        <form role="form" action="/UpdateAndLoadEssayPageDataServlet" method="post" name="writeComForm">
+                        <form role="form" action="/BaseServlet/EssayPage/setData" method="post" name="writeComForm">
                             <input type="hidden" name="essay_id" value="${requestScope.current_essay.id}">
                             <input type="hidden" name="FLAG" value="${"COMMENT"}">
                             <div class="form-group">
@@ -85,8 +84,8 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">${comment.username}</h3>
                             <span>${comment.creation_time}</span>
-                            <a href="/UpdateAndLoadEssayPageDataServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}&FLAG=${"STARCOM"}"><span class="glyphicon glyphicon-thumbs-up">${comment.star}&nbsp;</span></a>
-                            <a href="/UpdateAndLoadEssayPageDataServlet?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}&FLAG=${"DISSCOM"}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
+                            <a href="/BaseServlet/EssayPage/setData?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}&FLAG=${"STARCOM"}"><span class="glyphicon glyphicon-thumbs-up">${comment.star}&nbsp;</span></a>
+                            <a href="/BaseServlet/EssayPage/setData?comment_id=${comment.id}&essay_id=${requestScope.current_essay.id}&FLAG=${"DISSCOM"}"><span class="glyphicon glyphicon-thumbs-down">${comment.diss}</span></a>
                         </div>
                         <div class="panel-body">
                             ${comment.content}

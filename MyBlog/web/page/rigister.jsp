@@ -18,7 +18,7 @@
 <body>
 <div>
 <div class="container">
-    <form action="/RegisterServlet" method="post" class="form-horizontal" name="rigisterForm">
+    <form action="/BaseServlet/UserAction/register" method="post" class="form-horizontal" name="rigisterForm">
         <div class="row">
             <h1 class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 page_title "><br><br></h1>
         </div>

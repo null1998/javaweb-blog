@@ -39,13 +39,13 @@
                 </c:when>
                 <c:otherwise>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/LogOutServlet"><span class="glyphicon glyphicon-arrow-right"></span>退出</a></li>
+                        <li><a href="/BaseServlet/UserAction/logOut"><span class="glyphicon glyphicon-arrow-right"></span>退出</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#"> <span class="glyphicon glyphicon-cog"></span>设置</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/MyFavoriteServlet?current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-star"></span>收藏</a></li>
+                        <li><a href="/BaseServlet/UserAction/showFavorite?current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-star"></span>收藏</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="writeEssay.jsp"><span class="glyphicon glyphicon-edit"></span>写文章</a></li>
@@ -63,7 +63,7 @@
             <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
                 <c:forEach var="top_essay" items="${applicationScope.top_essays}">
-                    <li><a href="/InitEssayPageServlet?essay_id=${top_essay.id}&current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
+                    <li><a href="/BaseServlet/EssayPage/getData?essay_id=${top_essay.id}&current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
                 </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -84,7 +84,7 @@
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>
-                    <a href="/InitEssayPageServlet?essay_id=${essay.id}&current_user_id=${sessionScope.current_user.id}">阅读全文</a>
+                    <a href="/BaseServlet/EssayPage/getData?essay_id=${essay.id}&current_user_id=${sessionScope.current_user.id}">阅读全文</a>
                     <br/>
                 </div>
                 </c:forEach>

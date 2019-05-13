@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-   <jsp:forward page="/NullUserServlet" />
+   <jsp:forward page="/BaseServlet/NullUser/initNullUser" />
 </body>
 </html>
