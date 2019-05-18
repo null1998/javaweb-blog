@@ -13,7 +13,7 @@
     <script src="../js/writeEssay.js"></script>
 </head>
 <body>
-<form role="form" action="/BaseServlet/UserAction/createEssay" method="post" name="writeForm">
+<form role="form" action="/BaseServlet/UserActionProxy/createEssay" method="post" name="writeForm">
     <div class="form-group">
         <label for="title">标签</label>
         <input type="text" id="title" name="create_title" class="form-control" placeholder="文本输入">

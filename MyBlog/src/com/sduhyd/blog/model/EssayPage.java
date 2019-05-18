@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.Connection;
 
 public class EssayPage {
-   public  static void getData(HttpServletRequest request,HttpServletResponse response, ServletConfig sc)throws ServletException,IOException {
+   public void getData(HttpServletRequest request,HttpServletResponse response, ServletConfig sc)throws ServletException,IOException {
        Essay[] essays;
        Connection conn=(Connection) sc.getServletContext().getAttribute("conn");
        synchronized (sc.getServletContext()){
@@ -35,7 +35,7 @@ public class EssayPage {
         request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
 
     }
-    public static void setData(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws ServletException,IOException{
+    public void setData(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws ServletException,IOException{
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         Integer essay_id=Integer.valueOf(request.getParameter("essay_id"));

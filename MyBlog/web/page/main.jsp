@@ -39,13 +39,13 @@
                 </c:when>
                 <c:otherwise>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/BaseServlet/UserAction/logOut"><span class="glyphicon glyphicon-arrow-right"></span>退出</a></li>
+                        <li><a href="/BaseServlet/UserActionProxy/logOut"><span class="glyphicon glyphicon-arrow-right"></span>退出</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#"> <span class="glyphicon glyphicon-cog"></span>设置</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/BaseServlet/UserAction/showFavorite?current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-star"></span>收藏</a></li>
+                        <li><a href="/BaseServlet/UserActionProxy/showFavorite?current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-star"></span>收藏</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="writeEssay.jsp"><span class="glyphicon glyphicon-edit"></span>写文章</a></li>

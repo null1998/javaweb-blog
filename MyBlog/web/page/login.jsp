@@ -17,7 +17,7 @@
 <body>
 <div>
     <div class="container">
-        <form action="/BaseServlet/UserAction/login" method="get" class="form-horizontal" name="loginForm">
+        <form action="/BaseServlet/UserActionProxy/login" method="get" class="form-horizontal" name="loginForm">
             <div class="row">
                 <h1 class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 page_title "><br><br></h1>
             </div>
