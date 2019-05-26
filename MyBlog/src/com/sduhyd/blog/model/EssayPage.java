@@ -14,7 +14,11 @@ import java.io.IOException;
 import java.sql.Connection;
 
 public class EssayPage {
-   public void getData(HttpServletRequest request,HttpServletResponse response, ServletConfig sc)throws ServletException,IOException {
+    public ServletConfig getServletConfig(HttpServletRequest request){
+        return (ServletConfig) request.getSession().getServletContext().getAttribute("servletConfig");
+    }
+   public void getData(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException {
+        ServletConfig sc=getServletConfig(request);
        Essay[] essays;
        Connection conn=(Connection) sc.getServletContext().getAttribute("conn");
        synchronized (sc.getServletContext()){
@@ -35,7 +39,8 @@ public class EssayPage {
         request.getRequestDispatcher("/page/singleBlog.jsp").forward(request,response);
 
     }
-    public void setData(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws ServletException,IOException{
+    public void setData(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException{
+        ServletConfig sc=getServletConfig(request);
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         Integer essay_id=Integer.valueOf(request.getParameter("essay_id"));
@@ -45,6 +50,7 @@ public class EssayPage {
         User current_user=(User)session.getAttribute("current_user");
         Essay essay=null;
         String FLAG=request.getParameter("FLAG");
+        System.out.println("FLAG "+FLAG);
         for(int i=0;i<essays.length;i++){
             if(essays[i].getId().equals(essay_id)){
                 if(FLAG.equals("STAR")){

@@ -10,7 +10,7 @@ public class AuthCheckHandler extends ProxyHandler.Abstract<AuthCheck> {
 	private AuthCheck annot;
 	@Override
 	public Object handle(Object[] arguments, ProxyPoint point) throws Exception{
-		if(annot.value()!=1) { // 改为其它条件,不等于当前current_user的id
+		if(true) { //annot.value()!=current_user_id
 			// 权限校验通过调用原方法
 			System.out.println("权限校验通过，" + point.getTargetMethod() + "方法将会被调用到");
 			return point.proceed(arguments);

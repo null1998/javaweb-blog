@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 public class MainPage {
-    public void getData(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws IOException {
+    public static void getData(HttpServletRequest request, HttpServletResponse response)throws IOException {
         ServletContext context = request.getServletContext();
         Connection conn=(Connection) context.getAttribute("conn");
         ArrayList<Essay> arrayList = new Utils().allEssay(conn);

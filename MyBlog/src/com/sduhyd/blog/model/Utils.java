@@ -361,11 +361,7 @@ public class Utils {
             evaluateComCount--;
             updateEvaluateComCountDown(conn,comment_id,user_id,evaluateComCount,evaluateCom);
         }
-        if(evaluateCom.equals("starCom")){
-            essay.setStar(evaluateComCount);
-        }else if(evaluateCom.equals("dissCom")){
-            essay.setDiss(evaluateComCount);
-        }
+
         return essay;
     }
     public Essay starCom(Connection conn,Integer comment_id,Integer user_id,Essay essay){

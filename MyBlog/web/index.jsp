@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-        <a href="/BaseServlet/auth/getUserInfo">aaa</a>
+        <jsp:forward page="/BaseServlet/auth/nullUser"/>
 </body>
 </html>

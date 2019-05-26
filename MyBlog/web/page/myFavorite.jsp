@@ -15,14 +15,14 @@
 </head>
 <body>
 <div>
-    <a href="/BaseServlet/MainPage/getData"><span class="glyphicon glyphicon-home">返回首页</span></a>
+    <a href="/BaseServlet/page/loadMain"><span class="glyphicon glyphicon-home">返回首页</span></a>
 </div>
 <br>
 <div class="row">
     <div class="col-sm-4">
         <ul class="nav nav-pills nav-stacked">
             <c:forEach var="myfavorite_essay" items="${requestScope.myfavorite_essays}">
-                <li><a href="/BaseServlet/EssayPage/getData?essay_id=${myfavorite_essay.id}"><span class="glyphicon glyphicon-heart-empty">${myfavorite_essay.favorite}&nbsp;${myfavorite_essay.title}&nbsp;${myfavorite_essay.username}&nbsp;</span></a><a href="/BaseServlet/UserActionProxy/deleteFavorite?essay_id=${myfavorite_essay.id}&user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-trash"></span></a></li>
+                <li><a href="/BaseServlet/page/loadEssay?essay_id=${myfavorite_essay.id}"><span class="glyphicon glyphicon-heart-empty">${myfavorite_essay.favorite}&nbsp;${myfavorite_essay.title}&nbsp;${myfavorite_essay.username}&nbsp;</span></a><a href="/BaseServlet/auth/deleteFavorite?essay_id=${myfavorite_essay.id}&user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-trash"></span></a></li>
             </c:forEach>
         </ul>
         <hr class="hidden-sm hidden-md hidden-lg">

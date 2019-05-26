@@ -53,8 +53,12 @@ private ControllerMapper mapper;
 
     public void init()throws ServletException{
         super.init();
+        ServletConfig servletConfig=this.getServletConfig();
+        ServletContext servletContext=this.getServletContext();
+        servletContext.setAttribute("servletConfig",servletConfig);
         //"com.sduhyd.blog.controller"
         String controllerPackage = this.getInitParameter("controller-package");
+
         mapper = new ControllerMapper(controllerPackage);
         try {
             mapper.init();

@@ -11,14 +11,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class NullUser {
-    public static void initNullUser(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws IOException {
+    public static void initNullUser(HttpServletRequest request, HttpServletResponse response)throws IOException {
         //设置一个空的user，用户登陆后会覆盖它
         synchronized (request.getSession()){
             HttpSession session = request.getSession(false);
             User null_user=new User();
             null_user.setId(0);
             session.setAttribute("current_user", null_user);
-            response.sendRedirect("/BaseServlet/MainPage/getData");
+            response.sendRedirect("/BaseServlet/page/loadMain");
         }
     }
 }
