@@ -7,7 +7,6 @@
         <param-name>url-database</param-name>
         <param-value>localhost:3306/DB_BLOG</param-value>
     </context-param>
-
     <listener>
         <listener-class>com.sduhyd.blog.others.ApplicationListener</listener-class>
     </listener>
@@ -21,11 +20,16 @@
 
     <servlet>
         <servlet-name>BaseServlet</servlet-name>
-        <servlet-class>com.sduhyd.blog.controller.BaseServlet</servlet-class>
+        <servlet-class>com.sduhyd.blog.BaseServlet</servlet-class>
+        <init-param>
+            <param-name>controller-package</param-name>
+            <param-value>com.sduhyd.blog.controller</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>BaseServlet</servlet-name>
         <url-pattern>/BaseServlet/*</url-pattern>
     </servlet-mapping>
+
 
 </web-app>
