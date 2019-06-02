@@ -1,6 +1,7 @@
 package com.sduhyd.blog.foundation;
 
 import com.sduhyd.blog.RequestHandler;
+import com.sduhyd.blog.annotations.AuthCheck;
 import com.sduhyd.blog.foundation.annotations.Controller;
 import com.sduhyd.blog.foundation.annotations.RequestMapping;
 
@@ -15,7 +16,6 @@ public class ControllerHandler implements RequestHandler {
 	private Object controllerInstance;
 	private Controller controllerAnnotation;
 	private RequestMapping requestHandlerMethodAnnotation;
-
 	/**
 	 * 控制器的执行程序（虽然他执行的是控制器代理类）
 	 * @param originalControllerClass //比如AuthController
@@ -43,6 +43,7 @@ public class ControllerHandler implements RequestHandler {
 				return false;
 			}
 		}
+
 		return this.requestPath().equals(request.getPathInfo());
 	}
 	private String requestPath() {
