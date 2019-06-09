@@ -1,4 +1,4 @@
-package com.sduhyd.blog.model;
+package com.sduhyd.blog.service;
 
 import com.sduhyd.blog.bean.User;
 
@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 
+/**
+ * 暂时弃用
+ */
 public interface Action {
      public void login(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws IOException;
      public  void register(HttpServletRequest request, HttpServletResponse response, ServletConfig sc)throws IOException;

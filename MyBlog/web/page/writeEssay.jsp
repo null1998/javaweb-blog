@@ -15,7 +15,7 @@
 <body>
 <form role="form" action="/BaseServlet/auth/createEssay" method="post" name="writeForm">
     <div class="form-group">
-        <label for="title">标签</label>
+        <label for="title">标题</label>
         <input type="text" id="title" name="create_title" class="form-control" placeholder="文本输入">
         <span id="title_help"></span>
     </div>

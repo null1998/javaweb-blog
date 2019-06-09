@@ -1,4 +1,4 @@
-<%@ page import="com.sduhyd.blog.model.Utils" %>
+
 <%@ page import="com.sduhyd.blog.bean.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -31,7 +31,7 @@
                 <li class="active"><a href="main.jsp"><span class="glyphicon glyphicon-home"></span>首页</a></li>
             </ul>
             <c:choose>
-                <c:when test="${sessionScope.current_user.id==0}">
+                <c:when test="${sessionScope.current_user==null}">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="rigister.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
                         <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
@@ -63,7 +63,7 @@
             <p>点赞量最多的三篇文章</p>
             <ul class="nav nav-pills nav-stacked">
                 <c:forEach var="top_essay" items="${applicationScope.top_essays}">
-                    <li><a href="/BaseServlet/page/loadEssay?essay_id=${top_essay.id}&current_user_id=${sessionScope.current_user.id}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
+                    <li><a href="/BaseServlet/page/loadEssay?essay_id=${top_essay.id}&current_user=${sessionScope.current_user}"><span class="glyphicon glyphicon-thumbs-up">${top_essay.star}&nbsp;${top_essay.title}&nbsp;${top_essay.username}&nbsp;</span></a></li>
                 </c:forEach>
             </ul>
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -84,7 +84,7 @@
                     <br/><br/>
                     <span>${essay.article}</span>
                     <br/><br/><br/>
-                    <a href="/BaseServlet/page/loadEssay?essay_id=${essay.id}&current_user_id=${sessionScope.current_user.id}">阅读全文</a>
+                    <a href="/BaseServlet/page/loadEssay?essay_id=${essay.id}&current_user=${sessionScope.current_user}">阅读全文</a>
                     <br/>
                 </div>
                 </c:forEach>

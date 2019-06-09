@@ -1,10 +1,7 @@
 package com.sduhyd.blog;
 
-import com.sduhyd.blog.bean.Essay;
-import com.sduhyd.blog.bean.User;
 import com.sduhyd.blog.foundation.ControllerMapper;
-import com.sduhyd.blog.model.Action;
-import com.sduhyd.blog.model.UserAction;
+import com.sduhyd.blog.utils.JdbcPool;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -13,17 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.security.CodeSource;
-import java.sql.Connection;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 
 /**
@@ -34,54 +21,24 @@ import java.util.ResourceBundle;
  */
 @WebServlet(name = "BaseServlet")
 public class BaseServlet extends HttpServlet {
-//    Class []classes=new Class[100];
-//    Method []methods=new Method[100];
-//    int count=0;//数组大小
 
-//    private int getClassAndMethodIndex(String className,String methodName){
-//        int i;
-//        for(i=0;i<count;i++){
-//            if(classes[i].getName().equals(className)&&methods[i].getName().equals(methodName)){
-//                System.out.println("选中"+classes[i].getName()+" "+methods[i].getName());
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
-private ControllerMapper mapper;
+    private ControllerMapper mapper;
     @Override
 
     public void init()throws ServletException{
         super.init();
-        ServletConfig servletConfig=this.getServletConfig();
-        ServletContext servletContext=this.getServletContext();
-        servletContext.setAttribute("servletConfig",servletConfig);
         //"com.sduhyd.blog.controller"
         String controllerPackage = this.getInitParameter("controller-package");
-
         mapper = new ControllerMapper(controllerPackage);
         try {
             mapper.init();
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        String [] classNames={"com.sduhyd.blog.model.UserActionProxy","com.sduhyd.blog.model.MainPage","com.sduhyd.blog.model.EssayPage","com.sduhyd.blog.model.NullUser"};
-//        for(String className:classNames ){
-//            try{
-//                Class c=Class.forName(className);
-//                Method[] ms=c.getDeclaredMethods();
-//                for(Method m:ms){
-//                    classes[count]=c;
-//                    methods[count]=m;
-//                    count++;
-//                }
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         try {
             resp.setContentType("application/json;charset=UTF-8");
             this.mapper.getHandler(req).handle(req, resp);
@@ -100,34 +57,7 @@ private ControllerMapper mapper;
 
 
 
-//        String[] cmd=request.getPathInfo().split("/");
-//        String className="com.sduhyd.blog.model."+cmd[1];
-//        String methodName=cmd[2];
-//
-//        int index = getClassAndMethodIndex(className, methodName);
-//        if (index != -1) {
-//            try {
-//                Class c=classes[index];
-//                Object object;
-//                if(c.getName().equals("com.sduhyd.blog.model.UserActionProxy")){
-//                    Constructor constructor=classes[index].getConstructor(Action.class);
-//                    object=constructor.newInstance(new UserAction());
-//                }else{
-//                    object=c.newInstance();
-//                }
-//                methods[index].invoke(object,request,response,getServletConfig());
-//            }catch (IllegalAccessException e){
-//                e.printStackTrace();
-//            }catch (InvocationTargetException e){
-//                e.printStackTrace();
-//            }catch(InstantiationException e){
-//                e.printStackTrace();
-//            }catch (NoSuchMethodException e){
-//                e.printStackTrace();
-//            }
-//        }else{
-//            System.out.println("找不到该类或方法");
-//        }
+
     }
 
 }

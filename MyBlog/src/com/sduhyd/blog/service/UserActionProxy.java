@@ -1,21 +1,22 @@
-package com.sduhyd.blog.model;
+package com.sduhyd.blog.service;
 
 import com.sduhyd.blog.bean.User;
-import com.sduhyd.blog.model.Action;
+import com.sduhyd.blog.service.Action;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 
 /**
+ * 暂时弃用
+ *
  * UserAction的代理类，与UserAction一样实现Action接口
  * 在构造函数里传入UserAction对象，调用UserAction的方法
- * 在调用前可以进行筛选拦截。
+ * 在调用前可以进行筛选拦截 。
  */
 public class UserActionProxy implements Action {
     private Action action;

@@ -25,7 +25,7 @@ primary key(id),
 foreign key(user_id,username) references BLOG_TB_USER(id,username) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-
+//这个表有点怪异
 create table BLOG_TB_COMMENT(
 id int not null auto_increment,
 user_id int not null,
