@@ -34,7 +34,7 @@ public class JdbcPool{
         //在静态代码块中加载db.properties数据库配置文件
         //InputStream in = JdbcPool.class.getClassLoader().getResourceAsStream("db.properties");
         try {
-            FileInputStream in=new FileInputStream("C:/Users/test/IdeaProjects/MyBlog/web/db.properties");;
+            FileInputStream in=new FileInputStream("C:/work/IdeaProjects/MyBlog/web/db.properties");;
             Properties prop = new Properties();
             prop.load(in);
             driver = prop.getProperty("driver");
