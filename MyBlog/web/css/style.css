@@ -1,8 +1,0 @@
-.register{
-    padding: 20px;
-    font-weight:700;
-    border:#FFF solid 1px;
-    -moz-border-radius: 10px;      /* Gecko browsers */
-    -webkit-border-radius: 10px;   /* Webkit browsers */
-    border-radius:10px;            /* W3C syntax */
-}
